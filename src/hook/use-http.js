@@ -54,6 +54,7 @@ const useHttpRequest = () => {
     } catch (err) {
       console.error(err);
     }
+    setIsLoading(false);
   }, [authCtx.token, authCtx.refreshToken]);
 
   return { isLoading, sendGetRequest, sendPostRequest };
