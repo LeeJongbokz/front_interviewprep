@@ -34,7 +34,7 @@ const SolutionList = ({ questionId }) => {
               <SolutionItem
                 key={item.answerId}
                 answerId={item.answerId}
-                name={item.name}
+                namae={item.name}
                 answer={item.answer}
                 heartCnt={item.heartCnt}
                 // heart={heart}

@@ -7,6 +7,7 @@ import AuthContext from '../../../store/auth-context';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 
 import SubmitButtonGroup from './SubmitButtonGroup';
 
@@ -45,6 +46,7 @@ const AnswerForm = ({ questionId }) => {
 
   return (
     <Box padding={2}>
+      <Divider sx={{borderColor: "black", display:{xs:"block", md:"none"}}} />
       <FormControl margin="dense" fullWidth variant="standard" sx={{ marginTop: '20px' }}>
         <TextField
           id="answer"
