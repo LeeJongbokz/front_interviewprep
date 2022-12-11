@@ -1,0 +1,5 @@
+.row:hover {
+    /* border: double 2px #ff4b4e; */
+    cursor: pointer;
+    /* box-shadow: 0 0 0 2px #ff4b4e inset; */
+  }
