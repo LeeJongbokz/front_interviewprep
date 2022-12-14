@@ -21,6 +21,7 @@ const SolCommentList = ({ answerId }) => {
           {COMMENTS.map((item, idx) => (
             <TableRow key={idx}>
               <TableCell sx={{ border: 0 }}>{item}</TableCell>
+              삭제하기
             </TableRow>
           ))}
         </TableBody>
