@@ -7,6 +7,7 @@ import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
 
 const COMMENTS = ['Comment1', 'Comment2'];
 
@@ -14,14 +15,25 @@ const SolCommentList = ({ answerId }) => {
   console.log('answerId : ', answerId);
 
   return (
-    <CardContent sx={{ backgroundColor: 'WhiteSmoke' }}>
+    // <CardContent sx={{ backgroundColor: 'WhiteSmoke' }}>
+    <CardContent>
       <Divider />
       <Table size="small">
         <TableBody>
           {COMMENTS.map((item, idx) => (
             <TableRow key={idx}>
               <TableCell sx={{ border: 0 }}>{item}</TableCell>
-              삭제하기
+              <TableCell sx={{ border: 0, color: 'red', textAlign: 'right' }}>
+                <Link
+                  underline="none"
+                  component="button"
+                  onClick={() => {
+                    console.info(`remove! ${idx}`);
+                  }}
+                >
+                  삭제
+                </Link>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
