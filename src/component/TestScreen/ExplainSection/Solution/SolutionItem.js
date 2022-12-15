@@ -2,39 +2,52 @@ import { useState } from 'react';
 import ExplainSectionCards from '../../../UI/ExplainSectionCards';
 import useHttpRequest from '../../../../hook/use-http';
 
-const SolutionItem = ({ answerId, name, answer, heartCnt:initHeartCnt, heart }) => {
+import SolCommentList from './SolCommentList';
+
+const SolutionItem = ({ answerId, namae, answer, heartCnt: initHeartCnt, heart }) => {
   const [favorite, setFavorite] = useState(heart);
-  const [heartCnt, setHeartCnt] = useState(initHeartCnt)
+  const [heartCnt, setHeartCnt] = useState(initHeartCnt);
+  const [commentVisible, setCommentVisible] = useState(false);
 
   const { sendPostRequest } = useHttpRequest();
 
   const favoriteHandler = () => {
     console.log('FAV');
     setFavorite(true);
-    setHeartCnt(prevState => prevState+1);
+    setHeartCnt(prevState => prevState + 1);
     sendPostRequest({
-      endpoint:"/heart",
+      endpoint: '/heart',
       bodyData: {
-        answer: answerId
-      }
-    })
+        answerId: answerId,
+      },
+    });
   };
   const unFavoriteHandler = () => {
     console.log('UN_FAV');
     setFavorite(false);
-    setHeartCnt(prevState => prevState-1);
+    setHeartCnt(prevState => prevState - 1);
+  };
+
+  const toggleComment = () => {
+    console.log('Tog Comm');
+    setCommentVisible(prevState => !prevState);
   };
 
   return (
     <ExplainSectionCards
-      namae={name}
+      namae={namae}
       answer={answer}
       heartCnt={heartCnt}
       availFav={true}
+      availComment={true}
       favorite={favorite}
       favHandler={favoriteHandler}
       unFavHandler={unFavoriteHandler}
-    />
+      visibleChildren={commentVisible}
+      CommentIconHandler={toggleComment}
+    >
+      <SolCommentList answerId={answerId} />
+    </ExplainSectionCards>
   );
 };
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ExplainSectionHeader from './ExplainSectionHeader';
 import QuestionField from './Question/QuestionField';
-import DiscussionSection from './Reference/ReferenceList';
+import ReferenceList from './Reference/ReferenceList';
 import SolutionList from './Solution/SolutionList';
 
 import Box from '@mui/material/Box';
@@ -25,7 +25,7 @@ const ExplainSection = ({ questionId }) => {
         }}
       >
         {headerVal === 0 && <QuestionField questionId={questionId} />}
-        {headerVal === 1 && <DiscussionSection />}
+        {headerVal === 1 && <ReferenceList />}
         {headerVal === 2 && <SolutionList questionId={questionId} />}
         {headerVal === 3 && <SubmissionList questionId={questionId} />}
       </Box>

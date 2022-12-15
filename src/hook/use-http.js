@@ -54,9 +54,62 @@ const useHttpRequest = () => {
     } catch (err) {
       console.error(err);
     }
+    setIsLoading(false);
   }, [authCtx.token, authCtx.refreshToken]);
 
-  return { isLoading, sendGetRequest, sendPostRequest };
+  const sendPutRequest = useCallback(async (requestOption, callback = () => {}) => {
+    setIsLoading(true);
+    const { endpoint, bodyData } = requestOption;
+    try {
+      const response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
+        method: 'PUT',
+        body: JSON.stringify(bodyData),
+        headers: {
+          'Content-Type': 'application/json',
+          accessToken: authCtx.token,
+          refreshToken: authCtx.refreshToken,
+        },
+      });
+
+      if (!response.ok) {
+        throw Error('Some thing went Error');
+      }
+
+      const responseData = await response.json();
+      callback(responseData);
+    } catch (err) {
+      console.error(err);
+    }
+    setIsLoading(false);
+  }, [authCtx.token, authCtx.refreshToken]);
+  
+  const sendDelRequest = useCallback(async (requestOption, callback = () => {}) => {
+    setIsLoading(true);
+    const { endpoint, bodyData } = requestOption;
+    try {
+      const response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
+        method: 'DEL',
+        body: JSON.stringify(bodyData),
+        headers: {
+          'Content-Type': 'application/json',
+          accessToken: authCtx.token,
+          refreshToken: authCtx.refreshToken,
+        },
+      });
+
+      if (!response.ok) {
+        throw Error('Some thing went Error');
+      }
+
+      const responseData = await response.json();
+      callback(responseData);
+    } catch (err) {
+      console.error(err);
+    }
+    setIsLoading(false);
+  }, [authCtx.token, authCtx.refreshToken]);
+
+  return { isLoading, sendGetRequest, sendPostRequest, sendPutRequest, sendDelRequest };
 };
 
 export default useHttpRequest;
