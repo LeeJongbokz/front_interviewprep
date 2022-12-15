@@ -14,7 +14,7 @@ import AnswerForm from './AnswerForm';
 
 const FrontendExam = () => {
   
-  const length = 5;
+  const length = 10;
   const inputRef = useRef();
 
   const [exam, setExam] = useState('');
