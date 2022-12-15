@@ -44,7 +44,7 @@ const RecentProblem = ({ memberInfo }) => {
         console.log(item)
         return (
           <>
-            <TableRow hover className={classes.row} onClick={() => navigate(`/test/${item.id}`)}>
+            <TableRow hover className={classes.row} onClick={() => navigate(`/test/${item["@id"]}`)}>
               <TableCell component="th" scope="row">{item.id}</TableCell>
               <TableCell>{item.content}</TableCell>
               <TableCell>{item.modifiedDate}</TableCell>
