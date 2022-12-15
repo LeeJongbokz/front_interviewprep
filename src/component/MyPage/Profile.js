@@ -153,7 +153,8 @@ const Profile = () => {
 
   useEffect(() => {
     const memberInfoHandler = data => {
-      setMemberInfo(data.data.content);
+      setMemberInfo(data.data);
+      console.log(data.data);
     };
     sendGetRequest(`/members/userInfo` , memberInfoHandler);
   }, [sendGetRequest]);
