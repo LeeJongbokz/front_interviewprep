@@ -8,11 +8,53 @@ import Tab from '@mui/material/Tab';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
-import { Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import companyLogo from '../img/logo.PNG';
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
+import Avatar from '@mui/material/Avatar';
+
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(name) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+      cursor:'pointer',
+    },
+    children: `${name.split(' ')[0][0]}`,
+    // children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+  };
+}
 
 const Header = () => {
   const [value, setValue] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const authCtx = useContext(AuthContext);
 
   const handleChange = (event, newValue) => {
@@ -23,17 +65,44 @@ const Header = () => {
     authCtx.logout();
   };
 
+  const menuClickHandler = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
   const headerButtons = authCtx.isLoggedIn ? (
     <>
-      <Button color="inherit" onClick={logoutHandler} sx={{  color:'#3A3A3A' ,fontWeight:'bold' ,fontSize:'14px'}} >
-        Logout
-      </Button>
-      <Button component={Link} to="/my-page" sx={{  color:'#3A3A3A' ,fontWeight:'bold' ,fontSize:'14px'}} >
-        mypage
-      </Button>
+      <Avatar {...stringAvatar('Test')} onClick={menuClickHandler} />
+      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MenuItem>
+          <Button
+            color="inherit"
+            onClick={() => {
+              handleClose();
+              logoutHandler();
+            }}
+            sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
+          >
+            Logout
+          </Button>
+        </MenuItem>
+        <MenuItem>
+          <Button
+            component={Link}
+            onClick={handleClose}
+            to="/my-page"
+            sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
+          >
+            mypage
+          </Button>
+        </MenuItem>
+      </Menu>
     </>
   ) : (
-    <Button component={Link} to="/login" sx={{  color:'#3A3A3A' ,fontWeight:'bold' ,fontSize:'14px'}} >
+    <Button
+      component={Link}
+      to="/login"
+      sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
+    >
       Login
     </Button>
   );
@@ -41,28 +110,28 @@ const Header = () => {
   const categoryButtons = (
     <>
       <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                '& > *': {
-                  m: 1,
-                },
-              }}
-            >
-              <Tabs value={value} onChange={handleChange} centered>
-                <Tab label="문제" component={Link} to="/test"/>
-                <Tab label="모의고사" component={Link} to="/exam"/>
-              </Tabs>
-            </Box>
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          '& > *': {
+            m: 1,
+          },
+        }}
+      >
+        <Tabs value={value} onChange={handleChange} centered>
+          <Tab label="문제" component={Link} to="/test" />
+          <Tab label="모의고사" component={Link} to="/exam" />
+        </Tabs>
+      </Box>
     </>
   );
 
   return (
     <>
-      <Box sx={{ flwxGrow: 1}}>
-        <AppBar position="static" variant="outLine" sx={{boxShadow:'none' }}>
-          <Toolbar sx={{  backgroundColor:'white', borderBottom: 'solid 1px #f4f4f4'}}>
+      <Box sx={{ flwxGrow: 1 }}>
+        <AppBar position="static" variant="outLine" sx={{ boxShadow: 'none' }}>
+          <Toolbar sx={{ backgroundColor: 'white', borderBottom: 'solid 1px #f4f4f4' }}>
             {/* <MenuIcon /> */}
             <Typography
               noWrap

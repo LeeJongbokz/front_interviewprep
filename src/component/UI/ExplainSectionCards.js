@@ -15,6 +15,7 @@ const ExplainSectionCards = ({
   heartCnt,
   availFav = false,
   myown = false,
+  date,
   favorite,
   favHandler = () => {},
   unFavHandler = () => {},
@@ -42,10 +43,10 @@ const ExplainSectionCards = ({
           <Typography component="div" sx={{ fontWeight: 'bold' }}>
             {namae}
           </Typography>
-          <Typography>XXXX-XX-XX</Typography>
+          <Typography>{date.slice(0,10)}</Typography>
         </Box>
         <Box padding={1}>
-          <Typography>{answer}</Typography>
+          <Typography sx={{ lineBreak:"anywhere"}}>{answer}</Typography>
         </Box>
       </CardContent>
       <CardActions

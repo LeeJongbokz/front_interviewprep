@@ -9,7 +9,7 @@ import LoginPage from './pages/LoginPage';
 import TestListPage from './pages/TestListPage';
 import SignUpPage from './pages/SignUpPage';
 import ExamPage from './pages/ExamPage';
-import FrontendExamPage from './pages/FrontendExamPage';
+import FrontendExamPage from './pages/ExamSectionPage';
 import MyPage from './pages/MyPage';
 import TestScreenPage from './pages/TestScreenPage';
 
@@ -43,7 +43,7 @@ function App() {
           <Route path="/" element={<TestListPage />} />
           <Route path="/test" element={<TestListPage />} />
           <Route path="/exam" element={<ExamPage />} />
-          <Route path="/exam/frontend" element={<FrontendExamPage />} />
+          <Route path="/exam/:examId" element={<FrontendExamPage />} />
           <Route path="/test/:questionId" element={<TestScreenPage />} />
           <Route
             path="/login"
