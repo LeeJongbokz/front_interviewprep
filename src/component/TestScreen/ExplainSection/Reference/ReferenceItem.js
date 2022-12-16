@@ -26,6 +26,7 @@ const ReferenceItem = ({ namae, content, date, heartCnt:initHeartCnt }) => {
       answer={content}
       heartCnt={heartCnt}
       availFav={true}
+      date={date}
       favorite={favorite}
       favHandler={favoriteHandler}
       unFavHandler={unFavoriteHandler}
