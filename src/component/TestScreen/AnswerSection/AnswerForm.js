@@ -8,6 +8,8 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import FormLabel from '@mui/material/FormLabel';
+
 
 import SubmitButtonGroup from './SubmitButtonGroup';
 
@@ -47,6 +49,7 @@ const AnswerForm = ({ questionId }) => {
   return (
     <Box padding={2}>
       <Divider sx={{borderColor: "black", display:{xs:"block", md:"none"}}} />
+      <FormLabel sx={{display:{xs:"block", md:"none"}}} component="label">답안작성란</FormLabel>
       <FormControl margin="dense" fullWidth variant="standard" sx={{ marginTop: '20px' }}>
         <TextField
           id="answer"
