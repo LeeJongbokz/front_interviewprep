@@ -18,6 +18,7 @@ const SubmissionList = ({ questionId }) => {
   return (
     <>
       {isLoading && <LoadingSpinner />}
+      {!isLoading && submissionList.length < 1 && "답변 내역이 없습니다." }
       {submissionList.map((item, index) => (
         <SubmissionItem
           key={item.answerId}
