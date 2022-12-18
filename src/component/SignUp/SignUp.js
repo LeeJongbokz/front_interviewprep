@@ -45,11 +45,30 @@ const SignUp = () => {
     return;
   };
 
+  //test start
+  // const [inputs, setInputs] = useState({
+  //   name: memberInfo.name,
+  //   nickName: memberInfo.nickName,
+  //   email: memberInfo.email,
+  // });
+  // const onChange = (e) => {
+  //   const { value, name, nickName, email } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+  //   setInputs({
+  //     ...inputs, // 기존의 input 객체를 복사한 뒤
+  //     [name]: value, // name 키를 가진 값을 value 로 설정
+  //     [nickName]: value,
+  //     [email]: value
+  //   });
+  //   console.log(value)
+  // };
+  //test end
+
   function HandleChange(e) {
     //  console.log(onSubmit(e));
     switch (e.target.name) {
       case 'name':
         setName(e.target.value);
+        console.log(e.target.value)
         break;
       case 'passwordConfirm':
         setpasswordConfirm(e.target.value);

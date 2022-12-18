@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import TableCell from '@mui/material/TableCell';
 import LoadingSpinner from '../UI/LoadingSpinner';
@@ -153,7 +153,8 @@ const Profile = () => {
 
   useEffect(() => {
     const memberInfoHandler = data => {
-      setMemberInfo(data.data.content);
+      setMemberInfo(data.data);
+      console.log(data.data);
     };
     sendGetRequest(`/members/userInfo` , memberInfoHandler);
   }, [sendGetRequest]);
@@ -166,14 +167,15 @@ const Profile = () => {
       <Typography component="h5" variant="h6" fontWeight="800" sx={{ marginTop: '20px' }}>
         회원 정보
       </Typography>
+      
       <Card noValidate variant="outlined" sx={{ marginBottom: '20px', padding: '20px' }}>
         {isLoading && <LoadingSpinner />}
         {!isLoading && <Test memberInfo = {memberInfo} />}
         {/* {!isLoading && <MemberList memberInfo = {memberInfo} />} */}
       </Card>
-      <Button type="submit" variant="contained" label={'margin="normal"'}>
+      {/* <Button type="submit" variant="contained" label={'margin="normal"'}>
         저장
-      </Button>
+      </Button> */}
     </ContainerUI>
   )
 }
