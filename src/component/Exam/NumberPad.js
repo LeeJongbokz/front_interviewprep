@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 
 const NumberPad = ({ answerList, questionIdx, changeIdxHandler, length }) => {
   return (
-    <Box component="div" textAlign="center">
+    <Box textAlign="center" paddingBottom={3} overflow="auto">
       <ButtonGroup sx={{textAlign:"center"}} variant="text">
         {Array(length).fill(0).map((value, i) => {
             const buttonText = i+1

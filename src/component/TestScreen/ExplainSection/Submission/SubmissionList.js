@@ -1,28 +1,36 @@
-import { useState, useEffect } from "react";
-import LoadingSpinner from "../../../UI/LoadingSpinner";
+import { useState, useEffect } from 'react';
+import LoadingSpinner from '../../../UI/LoadingSpinner';
 
-import SubmissionItem from "./SubmissionItem";
-import useHttpRequest from "../../../../hook/use-http";
+import SubmissionItem from './SubmissionItem';
+import useHttpRequest from '../../../../hook/use-http';
 
-const SubmissionList = ({questionId}) => {
-
-  const { isLoading, sendGetRequest} = useHttpRequest();
+const SubmissionList = ({ questionId }) => {
+  const { isLoading, sendGetRequest } = useHttpRequest();
   const [submissionList, setSubmissionList] = useState([]);
 
   useEffect(() => {
-    const submissionHandler=(data) => {
+    const submissionHandler = data => {
       setSubmissionList(data.data.content);
-    }
-    sendGetRequest(`/answer/solution/${questionId}/my`, submissionHandler);    
-  }, [sendGetRequest, questionId])
+    };
+    sendGetRequest(`/answer/solution/${questionId}/my`, submissionHandler);
+  }, [sendGetRequest, questionId]);
 
   return (
     <>
       {isLoading && <LoadingSpinner />}
-      {submissionList.map((item, index) => <SubmissionItem key={item.answerId} idx={+index+1} answerId={item.answerId} answer={item.answer} heartCnt={item.heartCnt} />)}
+      {!isLoading && submissionList.length < 1 && "답변 내역이 없습니다." }
+      {submissionList.map((item, index) => (
+        <SubmissionItem
+          key={item.answerId}
+          idx={+index + 1}
+          date={item.createdDate}
+          answerId={item.answerId}
+          answer={item.answer}
+          heartCnt={item.heartCnt}
+        />
+      ))}
     </>
-  )
-
-}
+  );
+};
 
 export default SubmissionList;
