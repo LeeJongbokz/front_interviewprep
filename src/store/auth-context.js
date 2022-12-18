@@ -66,7 +66,7 @@ export const AuthContextProvider = props => {
     removeCookie('refreshtoken',{path:'/'});
     setToken(null);
     setRefreshToken(null);
-    window.location.reload();
+    window.location.href = "/";
     return;
   };
 

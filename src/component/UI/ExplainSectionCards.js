@@ -4,23 +4,25 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 
-// import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
+import ExplainSectionCardMoreButton from './ExplainSectionCardMoreButton';
 
 const ExplainSectionCards = ({
   namae,
   answer,
   heartCnt,
   availFav = false,
+  myown = false,
+  date,
   favorite,
   favHandler = () => {},
   unFavHandler = () => {},
   availComment = false,
   CommentIconHandler = () => {},
   visibleChildren = false,
-  children
+  children,
 }) => {
   const favButton = () => {
     if (availFav) {
@@ -41,10 +43,10 @@ const ExplainSectionCards = ({
           <Typography component="div" sx={{ fontWeight: 'bold' }}>
             {namae}
           </Typography>
-          <Typography>XXXX-XX-XX</Typography>
+          <Typography>{date.slice(0,10)}</Typography>
         </Box>
         <Box padding={1}>
-          <Typography>{answer}</Typography>
+          <Typography sx={{ lineBreak:"anywhere"}}>{answer}</Typography>
         </Box>
       </CardContent>
       <CardActions
@@ -55,13 +57,13 @@ const ExplainSectionCards = ({
         <Typography>{heartCnt}</Typography>
         {availComment && (
           <>
-            <CommentIcon sx={{cursor:"pointer"}} onClick={CommentIconHandler}/>
+            <CommentIcon sx={{ cursor: 'pointer' }} onClick={CommentIconHandler} />
             <Typography>0</Typography>
           </>
         )}
-        {/* <MoreHorizIcon /> */}
+        {myown && <ExplainSectionCardMoreButton />}
       </CardActions>
-        {visibleChildren && children}
+      {visibleChildren && children}
     </Card>
   );
 };
