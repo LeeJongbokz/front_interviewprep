@@ -23,7 +23,7 @@ const ExamSection = () => {
   const [exam, setExam] = useState([]);
   const [questionIdx, setQuestionIdx] = useState(0);
   const [length, setLength] = useState(0);
-  const { isLoading, sendGetRequest, sendPostRequest } = useHttpRequest();
+  const { isLoading, sendGetRequest, sendPostRequest } = useHttpRequest(true);
 
   const changeIdxHandler = index => {
     setQuestionIdx(index);

@@ -2,8 +2,8 @@ import { useState, useContext, useCallback } from 'react';
 import { BACKEND_BASE_URL } from '../global_variables';
 import AuthContext from '../store/auth-context';
 
-const useHttpRequest = () => {
-  const [isLoading, setIsLoading] = useState(false);
+const useHttpRequest = (isLoadingInit = false) => {
+  const [isLoading, setIsLoading] = useState(isLoadingInit);
   const authCtx = useContext(AuthContext);
 
   const sendGetRequest = useCallback(
