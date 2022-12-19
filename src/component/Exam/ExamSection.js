@@ -13,6 +13,7 @@ import ContainerUI from '../UI/ContainerUI';
 import AnswerForm from './AnswerForm';
 import { useParams, useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../UI/LoadingSpinner';
+import Timer from './Timer';
 
 const ExamSection = () => {
   const inputRef = useRef();
@@ -92,6 +93,7 @@ const ExamSection = () => {
             changeIdxHandler={changeIdxHandler}
             length={length}
           />
+          <Timer initSeconds={600} />
           <Divider />
           <Box padding={2}>
             {exam.length > 0 && (
