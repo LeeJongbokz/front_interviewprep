@@ -3,17 +3,21 @@ import LoadingSpinner from '../../../UI/LoadingSpinner';
 
 import SubmissionItem from './SubmissionItem';
 import useHttpRequest from '../../../../hook/use-http';
+import { getStaticSubmission, setStaticSubmission } from '../../TestScreenVariables';
 
 const SubmissionList = ({ questionId }) => {
   const { isLoading, sendGetRequest } = useHttpRequest();
-  const [submissionList, setSubmissionList] = useState([]);
+  const [submissionList, setSubmissionList] = useState(getStaticSubmission());
 
   useEffect(() => {
     const submissionHandler = data => {
       setSubmissionList(data.data.content);
+      setStaticSubmission(data.data.content);
     };
-    sendGetRequest(`/answer/solution/${questionId}/my`, submissionHandler);
-  }, [sendGetRequest, questionId]);
+    if(submissionList.length < 1) {
+      sendGetRequest(`/answer/solution/${questionId}/my`, submissionHandler);
+    }
+  }, [sendGetRequest, questionId, submissionList.length ]);
 
   return (
     <>

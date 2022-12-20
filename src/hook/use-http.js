@@ -88,7 +88,7 @@ const useHttpRequest = (isLoadingInit = false) => {
     const { endpoint, bodyData } = requestOption;
     try {
       const response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
-        method: 'DEL',
+        method: 'DELETE',
         body: JSON.stringify(bodyData),
         headers: {
           'Content-Type': 'application/json',
