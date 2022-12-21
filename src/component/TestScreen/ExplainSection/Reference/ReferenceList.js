@@ -6,35 +6,23 @@ import ReferenceForm from './ReferenceForm';
 import useHttpRequest from '../../../../hook/use-http';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
 
-// const REFERENCE_LIST = [
-//   {
-//     id: 1,
-//     namae: 'alpha',
-//     content: 'Reference #1',
-//     date: '2022-12-08',
-//     heartCnt: 1,
-//   },
-//   {
-//     id: 2,
-//     namae: 'beta',
-//     content: 'Reference #2',
-//     date: '2022-12-09',
-//     heartCnt: 3,
-//   },
-// ];
+import { getStaticReference, setStaticReference } from '../../TestScreenVariables';
 
 const ReferenceList = ({ questionId }) => {
-  const [reference, setReference] = useState([]);
+  const [reference, setReference] = useState(getStaticReference());
   const { isLoading, sendGetRequest } = useHttpRequest();
 
   useEffect(() => {
     const referenceListHandler = data => {
       if (data.success) {
         setReference(data.data.content);
+        setStaticReference(data.data.content);
       }
     };
-    sendGetRequest(`/question/ref/${questionId}`, referenceListHandler);
-  }, [questionId, sendGetRequest]);
+    if(reference.length < 1 ){
+      sendGetRequest(`/question/ref/${questionId}`, referenceListHandler);
+    }
+  }, [questionId, sendGetRequest, reference.length]);
 
   return (
     <>

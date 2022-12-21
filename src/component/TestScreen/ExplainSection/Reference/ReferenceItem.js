@@ -23,7 +23,7 @@ const ReferenceItem = ({ namae, content, date, heartCnt:initHeartCnt }) => {
   return (
     <ExplainSectionCards
       namae={namae}
-      answer={content}
+      content={content}
       heartCnt={heartCnt}
       availFav={true}
       date={date}

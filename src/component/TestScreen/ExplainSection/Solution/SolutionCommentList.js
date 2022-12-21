@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import useHttpRequest from '../../../../hook/use-http';
 
 import FormControl from '@mui/material/FormControl';
 import ListItem from '@mui/material/ListItem';
@@ -9,7 +10,13 @@ import Typography from '@mui/material/Typography';
 
 const AnswerCommentList = ({ answerId }) => {
   const [comments, setComments] = useState([]);
+  const { sendGetRequest, sendPostRequest } = useHttpRequest();
 
+  // useEffect(() => {
+  //   const getRequestHandler = data => {
+  //     setComments()
+  //   }
+  // });
   useEffect(() => {
     const getCommentAPI = async () => {
       const response = await fetch(
@@ -33,27 +40,25 @@ const AnswerCommentList = ({ answerId }) => {
 
   const commentRef = useRef();
   const submitHandler = async () => {
-    const response = await fetch(
-      `https://react-post-de8f7-default-rtdb.firebaseio.com/interviewPrep/answerComment/${answerId}.json`,
-      {
-        method: 'POST',
-        body: JSON.stringify({ comment: commentRef.current.value }),
-        Headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
-    if (response.ok) {
-      console.log('success');
-    }
+    sendPostRequest({ endpoint: `/answer/comment/`, bodyData: {
+      "answerId" : answerId,
+      "comment" : commentRef.current.value
+    } });
+    commentRef.current.value = "";
   };
 
   return (
     <>
       <Divider />
-      <Typography textAlign="center" variant="h5" m={1}>Comments</Typography>
+      <Typography textAlign="center" variant="h5" m={1}>
+        Comments
+      </Typography>
       {comments.map((val, index) => {
-        return <ListItem sx={{ ml: 2}} key={index}>{val}</ListItem>;
+        return (
+          <ListItem sx={{ ml: 2 }} key={index}>
+            {val}
+          </ListItem>
+        );
       })}
       <FormControl
         variant="standard"
@@ -71,7 +76,7 @@ const AnswerCommentList = ({ answerId }) => {
           }}
           sx={{ flex: 1 }}
           inputRef={commentRef}
-          // helperText={`${answer.length}/50`}
+          helperText={`??`}
         />
         <Button onClick={submitHandler} variant="outlined">
           등록

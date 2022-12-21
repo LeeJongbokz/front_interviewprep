@@ -40,7 +40,7 @@ function stringAvatar(name) {
   return {
     sx: {
       bgcolor: stringToColor(name),
-      cursor:'pointer',
+      cursor: 'pointer',
     },
     children: `${name.split(' ')[0][0]}`,
     // children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
@@ -75,6 +75,16 @@ const Header = () => {
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem>
           <Button
+            component={Link}
+            onClick={handleClose}
+            to="/my-page"
+            sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
+          >
+            mypage
+          </Button>
+        </MenuItem>
+        <MenuItem>
+          <Button
             color="inherit"
             onClick={() => {
               handleClose();
@@ -83,16 +93,6 @@ const Header = () => {
             sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
           >
             Logout
-          </Button>
-        </MenuItem>
-        <MenuItem>
-          <Button
-            component={Link}
-            onClick={handleClose}
-            to="/my-page"
-            sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
-          >
-            mypage
           </Button>
         </MenuItem>
       </Menu>
@@ -108,51 +108,50 @@ const Header = () => {
   );
 
   const categoryButtons = (
-    <>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          '& > *': {
-            m: 1,
-          },
-        }}
-      >
-        <Tabs value={value} onChange={handleChange} centered>
-          <Tab label="문제" component={Link} to="/test" />
-          <Tab label="모의고사" component={Link} to="/exam" />
-        </Tabs>
-      </Box>
-    </>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        '& > *': {
+          m: 1,
+        },
+      }}
+    >
+      <Tabs value={value} onChange={handleChange} centered>
+        <Tab label="문제" component={Link} to="/test" />
+        <Tab label="모의고사" component={Link} to="/exam" />
+      </Tabs>
+    </Box>
   );
 
   return (
-    <>
-      <Box sx={{ flwxGrow: 1 }}>
-        <AppBar position="static" variant="outLine" sx={{ boxShadow: 'none' }}>
-          <Toolbar sx={{ backgroundColor: 'white', borderBottom: 'solid 1px #f4f4f4' }}>
-            {/* <MenuIcon /> */}
-            <Typography
-              noWrap
-              variant="h6"
-              component={Link}
-              to="/"
-              sx={{
-                display: 'flex',
-                flexGrow: 1,
-                fontWeight: 700,
-                textDecoration: 'none',
-              }}
-            >
-              <img src={companyLogo} alt="logo" style={{ height: '30px' }} />
-            </Typography>
-            {categoryButtons}
-            {headerButtons}
-          </Toolbar>
-        </AppBar>
-      </Box>
-    </>
+    <Box sx={{ flwxGrow: 1 }}>
+      <AppBar position="static" variant="outLine" sx={{ boxShadow: 'none' }}>
+        <Toolbar 
+          sx={{
+            justifyContent:"space-between",
+            backgroundColor: 'white',
+            borderBottom: 'solid 1px #f4f4f4',
+          }}
+        >
+          <Typography
+            noWrap
+            variant="h6"
+            component={Link}
+            to="/"
+            sx={{
+              fontWeight: 700,
+              textDecoration: 'none',
+            }}
+          >
+            <img src={companyLogo} alt="logo" style={{ height: '30px' }} />
+          </Typography>
+          {categoryButtons}
+          {headerButtons}
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
 };
 
