@@ -1,94 +1,100 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Button from '@mui/material/Button';
-// import Card from '@mui/material/Card';
-import Box from '@mui/material/Box';
+import Table from '@mui/material/Table';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Table from '@mui/material/Table';
-// import TableCell from '@mui/material/TableCell';
-// import LoadingSpinner from '../UI/LoadingSpinner';
 import { Link } from 'react-router-dom';
-
-// import useHttpRequest from '../../hook/use-http';
-
+import useHttpRequest from '../../hook/use-http';
 import RecentProblem from './RecentProblem';
 
 const MemberList = ({ memberInfo }) => {
-  const { fetchedEmail = "aa", fetchedPassword = "gg" } = memberInfo;
-  const [email, setEmail] = useState(fetchedEmail);
-  const [password, setPassword] = useState(fetchedPassword || "password");
-  // const [confirmPassword, setConfrimPassword] = useState('');
-  // const [name, setName] = useState('');
-  // const [nickname, setNickname] = useState('');
-  // const [open, setOpen] = useState(false);
-  // const [newNickname, setnewNickname] = useState(false);
-  // const [value, setValue] = useState(0);
 
-  const onSubmitEmail = async e => {
-    e.preventDefault();
-
-    const bodyData = {
-      name: name,
-      nickname: nickname,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
-    };
-    const response = await fetch(`http://52.202.27.18:8080/members/email/change`, {
-      method: 'PUT',
-      body: JSON.stringify(bodyData),
-      headers: {
-        'Content-Type': 'application/json',
+  console.log(memberInfo);
+  const [value, setValue] = useState(0);
+  const [open, setOpen] = useState(false);
+  const [updatePasswords, setUpdatePasswords] = useState({
+    newPassword: '',
+    confirmPassword: ''
+  });
+  const [inputs, setInputs] = useState({
+    name: memberInfo.name,
+    nickName: memberInfo.nickName,
+    email: memberInfo.email,
+    password: memberInfo.password,
+  });
+  
+  const { sendPutRequest } = useHttpRequest();
+  const { name, nickName, email, password } = inputs; // 비구조화 할당을 통해 값 추출
+  const { newPassword, confirmPassword } = updatePasswords;
+  const {updateResult, setupdateResult} = useState([]);
+  // const updateResult = [];
+  const onChange = (e) => {
+    
+    const { value, name, nickName, email, password, newPassword, confirmPassword } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    setInputs({
+      ...inputs, // 기존의 input 객체를 복사한 뒤
+      [name]: value, // name 키를 가진 값을 value 로 설정
+      [nickName]: value,
+      [email]: value,
+      [password]: value
+    });
+    // const { newPassword, confirmPassword } = e.target;
+    setUpdatePasswords({
+      ...updatePasswords,
+      [confirmPassword]: value,
+      [newPassword]: value
+    });
+    console.log(e.target)
+    console.log(value)
+    if(e.target){
+      setupdateResult({
+        id: e.target.id,
+        name: e.target.value
+      });
+      // updateResult.push({
+      //   id: e.target.id,
+      //   name: e.target.value
+      // })
+    }
+    console.log(updateResult)
+  };
+  // const infoUpdateCheck = () => {
+  //   const updateResult = [];
+  //   const { value, name, nickName, email, password} = e.target;
+  //   if()
+  // };
+  const infoUpdateHandler = () => {
+    console.log(updateResult)
+    sendPutRequest({
+      endpoint: '/members/change',
+      bodyData: {
+        name: name,
+        nickName: nickName,
+        email: email,
       },
     });
-    console.log('성공!')
-    console.log(bodyData.email);
-    if (!response.ok) {
-      alert('오류가 발생했습니다. 다시 시도해주세요!');
-      return;
-    }
-
-    // try {
-    //   const res = API.post('members/signup');
-    //   console.log(res);
-    //   console.log(HandleChange(e));
-    // } catch (err) {
-    //   console.log(err);
-    // }
-
   };
-
-  function handleRecentProblem(e, newValue) {
-    setValue(newValue);
-    console.log(newValue);
-  }
-
-  const handleClickOpen = (e) => {
-
-    switch (e.target.name) {
-      case 'nicknameChange':
-        setNickname(e.target.value);
-        setnewNickname(true);
-        console.log('닉네임부분');
-        break;
-      case 'passwordChange':
-        setPassword(e.target.value);
-        console.log('비밀번호 부분')
-        setOpen(true);
-        break;
-      case 'email':
-        setEmail(e.target.value);
-        setOpen(true);
-        break;
-      default:
-    }
+  const passwordUpdateHandler = () => {
+    console.log(password)
+    console.log(newPassword)
+    sendPutRequest({
+      endpoint: 'members/password/change',
+      bodyData: {
+        password: password,
+        newPassword: newPassword
+      },
+    });
+    handleClose();
+  };
+  const handleClickOpen = () => {
     setOpen(true);
   };
 
@@ -96,52 +102,43 @@ const MemberList = ({ memberInfo }) => {
     setOpen(false);
   };
 
-  const HandleChangeName = () => {
-    alert('닉네임 변경')
+  const onReset = () => {
+    setInputs({
+      name: memberInfo.name,
+      nickName: memberInfo.nickName,
+      email: memberInfo.email,
+      password: memberInfo.password,
+    })
+    console.log(memberInfo.name)
+  };
+  const tableComponent = () => {
+    if (memberInfo.answers) {
+      return <RecentProblem memberInfo={memberInfo} />;
+    }
   }
 
+  const handleRecentProblem = (e, newValue) => {
+    setValue(newValue);
+    console.log(newValue);
+  }
 
   return (
-    <>
+    <div>
       <Typography component="h5" fontWeight="800" >
         닉네임
       </Typography>
       <Box display="flex" justifyContent="center" alignItems="center">
         <TextField
-          id="nickname"
-          label="nickname"
-          name="nickname"
+          id="nickName"
+          label="nickName"
+          name="nickName"
           type="text"
           margin="normal"
           required
           fullWidth
-          value={nickname}
-          onChange={HandleChange}
+          value={nickName}
+          onChange={onChange}
         />
-        <Button
-          name="nicknameChange"
-          type="submit"
-          variant="outlined"
-          label={'margin="normal" '}
-          sx={{ width: '150px', height: '54px' }}
-          onClick={e => handleClickOpen(e)}
-        >
-          닉네임 변경
-        </Button>
-        <Dialog open={newNickname} onClose={handleClose} >
-          <DialogTitle>
-            닉네임 변경
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              닉네임을 변경하시겠습니까?ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>취소</Button>
-            <Button onClick={handleClose} onChange={HandleChangeName}>변경</Button>
-          </DialogActions>
-        </Dialog>
       </Box>
       <Typography component="h5" fontWeight="800" >
         이름
@@ -155,7 +152,7 @@ const MemberList = ({ memberInfo }) => {
         disabled
         fullWidth
         value={name}
-        onChange={HandleChange}
+        onChange={onChange}
       />
       <Typography component="h5" fontWeight="800" >
         이메일
@@ -170,11 +167,8 @@ const MemberList = ({ memberInfo }) => {
           required
           fullWidth
           value={email}
-          onChange={HandleChange}
+          onChange={onChange}
         />
-        <Button onClick={onSubmitEmail} type="submit" variant="outlined" label={'margin="normal" '} sx={{ width: '150px', height: '54px' }}>
-          이메일 변경
-        </Button>
       </Box>
       <Typography component="h5" fontWeight="800" >
         비밀번호
@@ -190,8 +184,7 @@ const MemberList = ({ memberInfo }) => {
           required
           fullWidth
           value={password}
-
-          onChange={e => HandleChange(e)}
+          onChange={onChange}
         />
         <div>
           <Button name="passwordChange" type="submit" variant="outlined" label={'margin="normal" '} sx={{ width: '150px', height: '54px' }} onClick={e => handleClickOpen(e)}>
@@ -210,8 +203,10 @@ const MemberList = ({ memberInfo }) => {
                   type="password"
                   margin="normal"
                   name="password"
+                  required
                   fullWidth
                   value={password}
+                  onChange={onChange}
                   autoFocus
                   variant="standard"
                 />
@@ -221,13 +216,13 @@ const MemberList = ({ memberInfo }) => {
                   새 비밀번호
                 </DialogContentText>
                 <TextField
-                  id="password"
-                  label="password"
+                  id="newPassword"
+                  label="newPassword"
                   type="password"
                   margin="normal"
-                  name="password"
+                  name="newPassword"
                   fullWidth
-                  value={password}
+                  value={newPassword}
                   autoFocus
                   variant="standard"
                 />
@@ -251,7 +246,8 @@ const MemberList = ({ memberInfo }) => {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>취소</Button>
-              <Button onClick={handleClose} onChange={HandleChangeName}>변경</Button>
+              {confirmPassword === newPassword && <Button onClick={passwordUpdateHandler}>변경</Button>}
+              {confirmPassword !== newPassword && <Button onClick={alert('새 비밀번호가 일치하지 않습니다')}>변경</Button>}
             </DialogActions>
           </Dialog>
         </div>
@@ -265,11 +261,19 @@ const MemberList = ({ memberInfo }) => {
       </Box>
       <Box>
         <Table>
-          <RecentProblem />
+          {tableComponent()}
         </Table>
       </Box>
-    </>
-  );
-};
+      <div>
+        <Button type="submit" variant="contained" label={'margin="normal"'} onClick={infoUpdateHandler}>
+          저장
+        </Button>
+        <Button type="submit" variant="contained" label={'margin="normal"'} onClick={onReset}>
+          초기화
+        </Button>
+      </div>
+    </div>
+  )
+}
 
 export default MemberList;

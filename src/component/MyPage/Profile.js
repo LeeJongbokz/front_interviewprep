@@ -8,7 +8,7 @@ import LoadingSpinner from '../UI/LoadingSpinner';
 import useHttpRequest from '../../hook/use-http';
 import ContainerUI from '../../component/UI/ContainerUI';
 // import MemberList from './MemberList';
-import Test from './Test';
+import MemberList from './MemberList';
 
 export const TableCellColumnHead = ({ body }) => {
   return <TableCell component="th" scope="column" sx={{ color: 'white' }}>{body}</TableCell>;
@@ -170,7 +170,7 @@ const Profile = () => {
       
       <Card noValidate variant="outlined" sx={{ marginBottom: '20px', padding: '20px' }}>
         {isLoading && <LoadingSpinner />}
-        {!isLoading && <Test memberInfo = {memberInfo} />}
+        {!isLoading && <MemberList memberInfo = {memberInfo} />}
         {/* {!isLoading && <MemberList memberInfo = {memberInfo} />} */}
       </Card>
       {/* <Button type="submit" variant="contained" label={'margin="normal"'}>
