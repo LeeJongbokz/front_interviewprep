@@ -25,7 +25,7 @@ const ExplainSection = ({ questionId }) => {
         }}
       >
         {headerVal === 0 && <QuestionField questionId={questionId} />}
-        {headerVal === 1 && <ReferenceList />}
+        {headerVal === 1 && <ReferenceList questionId={questionId} />}
         {headerVal === 2 && <SolutionList questionId={questionId} />}
         {headerVal === 3 && <SubmissionList questionId={questionId} />}
       </Box>

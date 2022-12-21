@@ -12,7 +12,7 @@ const SubmissionItem = ({answerId, idx, date, answer, heartCnt}) => {
         <Typography component="div" sx={{ fontWeight: 'bold' }}>
             답변 {idx}
           </Typography>
-          <Typography>{date || "2022-XX-XX"}</Typography>
+          <Typography>{date.slice(0,10)}</Typography>
         </Box>
         <Box padding={1}>
           <Typography>{answer}</Typography>

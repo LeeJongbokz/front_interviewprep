@@ -13,7 +13,7 @@ const Test = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [page, setPage] = useState(0);
 
-  const { isLoading, sendGetRequest } = useHttpRequest();
+  const { isLoading, sendGetRequest } = useHttpRequest(true);
 
   useEffect(() => {
     const questionHandler = data => {

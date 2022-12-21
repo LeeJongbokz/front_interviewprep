@@ -4,6 +4,8 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 
+import Linkify from 'react-linkify';
+
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
@@ -11,10 +13,11 @@ import ExplainSectionCardMoreButton from './ExplainSectionCardMoreButton';
 
 const ExplainSectionCards = ({
   namae,
-  answer,
+  content,
   heartCnt,
   availFav = false,
   myown = false,
+  date = "XXXX-XX-XX",
   favorite,
   favHandler = () => {},
   unFavHandler = () => {},
@@ -42,10 +45,10 @@ const ExplainSectionCards = ({
           <Typography component="div" sx={{ fontWeight: 'bold' }}>
             {namae}
           </Typography>
-          <Typography>XXXX-XX-XX</Typography>
+          <Typography>{date.slice(0,10)}</Typography>
         </Box>
         <Box padding={1}>
-          <Typography>{answer}</Typography>
+          <Typography sx={{ lineBreak:"anywhere"}}><Linkify>{content}</Linkify></Typography>
         </Box>
       </CardContent>
       <CardActions
