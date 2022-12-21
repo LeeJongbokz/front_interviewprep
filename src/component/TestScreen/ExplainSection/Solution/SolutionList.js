@@ -18,7 +18,7 @@ const SolutionList = ({ questionId }) => {
       setAnswerList(data.data.content);
     };
     if (answerArray.length < 1) {
-      sendGetRequest(`/answer/solution/${questionId}/my`, answerArrayHandler);
+      sendGetRequest(`/answer/solution/${questionId}/others`, answerArrayHandler);
     }
   }, [sendGetRequest, answerArray.length, questionId]);
 
