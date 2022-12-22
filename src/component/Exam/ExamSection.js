@@ -15,8 +15,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import Timer from './Timer';
 
-const ExamSection = () => {
+const ExamSection = ({examStart}) => {
   const inputRef = useRef();
+  const spentSec = Math.floor((+new Date() - examStart)/1000)
 
   const { examId } = useParams();
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ const ExamSection = () => {
             changeIdxHandler={changeIdxHandler}
             length={length}
           />
-          <Timer initSeconds={600} />
+          <Timer initSeconds={600-spentSec} />
           <Divider />
           <Box padding={2}>
             {exam.length > 0 && (

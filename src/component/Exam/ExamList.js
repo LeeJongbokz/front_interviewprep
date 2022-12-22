@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom';
 
 import classes from './ExamList.module.css';
 import useHttpRequest from '../../hook/use-http';
-// import LoadingSpinner from '../UI/LoadingSpinner';
+import LoadingSpinner from '../UI/LoadingSpinner';
 
 const ExamList = () => {
   const [examList, setExamList] = useState([]);
-  const { sendGetRequest } = useHttpRequest();
+  const { isLoading, sendGetRequest } = useHttpRequest();
 
   useEffect(() => {
     const examListHandler = data => {
@@ -35,8 +35,9 @@ const ExamList = () => {
       <Typography component="h1" variant="h5" fontWeight="bold">
         모의고사
       </Typography>
-      <Grid container marginTop={3} spacing={3} columns={6} justify="center">
-        {examList.map(i => {
+      {isLoading && <LoadingSpinner />}
+      {!isLoading && <Grid container marginTop={3} spacing={3} columns={6} justify="center">
+        { examList.map(i => {
           const examId = i.id;
           const title = i.title;
           return (
@@ -90,7 +91,7 @@ const ExamList = () => {
             </Grid>
           );
         })}
-      </Grid>
+      </Grid>}
     </ContainerUI>
   );
 };
