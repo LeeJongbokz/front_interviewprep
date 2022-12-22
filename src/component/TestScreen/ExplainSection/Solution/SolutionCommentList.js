@@ -12,12 +12,13 @@ const AnswerCommentList = ({ answerId }) => {
   const [comments, setComments] = useState([]);
   const { sendGetRequest, sendPostRequest } = useHttpRequest();
 
-  // useEffect(() => {
-  //   const getRequestHandler = data => {
-  //     setComments()
-  //   }
-  // });
   useEffect(() => {
+    const getRequestHandler = data => {
+      setComments(data)
+    }
+  });
+  useEffect(() => {
+
     const getCommentAPI = async () => {
       const response = await fetch(
         `https://react-post-de8f7-default-rtdb.firebaseio.com/interviewPrep/answerComment/${answerId}.json`
@@ -40,10 +41,14 @@ const AnswerCommentList = ({ answerId }) => {
 
   const commentRef = useRef();
   const submitHandler = async () => {
+    const val = commentRef.current.value;
     sendPostRequest({ endpoint: `/answer/comment/`, bodyData: {
       "answerId" : answerId,
-      "comment" : commentRef.current.value
+      "comment" : val
     } });
+    setComments(prevState => {
+      return [...prevState, {id: 3000, memberName: "TESTING", comment: val}]
+    })
     commentRef.current.value = "";
   };
 

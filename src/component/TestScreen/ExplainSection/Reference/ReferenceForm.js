@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import useHttpRequest from '../../../../hook/use-http';
 
-const ReferenceForm = ({ questionId }) => {
+const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
   const [reference, setReference] = useState('');
   const { sendPostRequest } = useHttpRequest();
 
@@ -22,10 +22,25 @@ const ReferenceForm = ({ questionId }) => {
       await sendPostRequest({
         endpoint: `/question/ref/`,
         bodyData: {
-          "questionId": questionId,
-          "link": reference,
+          questionId: questionId,
+          link: reference,
         },
       });
+
+      setReferenceList(prevState => {
+        const newState = [
+          {
+            id: 9000,
+            link: reference,
+            date: 'XXXX-XX-XX',
+            heartCnt: 0,
+          },
+          ...prevState,
+        ];
+        saveReference(newState);
+        return newState;
+      });
+      setReference('');
     }
   };
   return (

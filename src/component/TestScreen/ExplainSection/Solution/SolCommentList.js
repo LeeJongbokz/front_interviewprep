@@ -10,12 +10,11 @@ import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 
 import useHttpRequest from '../../../../hook/use-http';
+import LoadingSpinner from '../../../UI/LoadingSpinner';
 
 const SolCommentList = ({ answerId }) => {
   const [ comments, setComments ] = useState([]);
-  
-  console.log('answerId : ', answerId);
-  const { sendGetRequest } = useHttpRequest();
+  const { isLoading, sendGetRequest, sendDelRequest } = useHttpRequest();
 
   useEffect(() => {
     const setCommentsHandler = (data) => {
@@ -26,13 +25,23 @@ const SolCommentList = ({ answerId }) => {
     sendGetRequest(`/answer/comment/${answerId}`, setCommentsHandler);
   }, [sendGetRequest, answerId]);
 
+  const deleteHandler = (id) => {
+    if(window.confirm("삭제 하시겠습니까?")){
+      sendDelRequest({ endpoint : `/answer/comment/${id}`});
+      setComments(prevState => {
+        return prevState.filter(item => item.id !== id);
+      });
+    }
+  }
+
   return (
     // <CardContent sx={{ backgroundColor: 'WhiteSmoke' }}>
     <CardContent>
       <Divider />
       <Table size="small">
         <TableBody>
-          {comments.map((item) => (
+          {isLoading && <LoadingSpinner />}
+          {!isLoading && comments.map((item) => (
             <TableRow key={item.id}>
               <TableCell sx={{ border: 0 }}>{item.memberName}</TableCell>
               <TableCell sx={{ border: 0 }}>{item.comment}</TableCell>
@@ -41,9 +50,7 @@ const SolCommentList = ({ answerId }) => {
                 <Link
                   underline="none"
                   component="button"
-                  onClick={() => {
-                    console.info(`remove! ${item.id}`);
-                  }}
+                  onClick={() => {deleteHandler(item.id)}}
                 >
                   삭제
                 </Link>
@@ -53,7 +60,7 @@ const SolCommentList = ({ answerId }) => {
           ))}
         </TableBody>
       </Table>
-      <SolCommentInput answerId={answerId} />
+      <SolCommentInput answerId={answerId} setComments={setComments} />
     </CardContent>
   );
 };

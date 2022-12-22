@@ -7,11 +7,19 @@ import useHttpRequest from '../../../../hook/use-http';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
 
 let lastQuestionId;
+
 let savedReference = [];
 
 const ReferenceList = ({ questionId }) => {
-  const [reference, setReference] = useState([]);
+  if( questionId !== lastQuestionId){
+    savedReference = [];
+  }
+  const [reference, setReference] = useState(savedReference);
   const { isLoading, sendGetRequest } = useHttpRequest();
+
+  console.log("LIST RERENDERED")
+
+  const saveReference = (newReference) => savedReference = newReference;
 
   useEffect(() => {
     const referenceListHandler = data => {
@@ -22,7 +30,7 @@ const ReferenceList = ({ questionId }) => {
       lastQuestionId = questionId;
     };
     if( lastQuestionId === questionId && savedReference.length > 0 ){
-      setReference(savedReference);
+      // setReference(savedReference);
     } else if (savedReference.length === 0 || lastQuestionId !== questionId) {
       sendGetRequest(`/question/ref/${questionId}`, referenceListHandler);
     }
@@ -30,7 +38,7 @@ const ReferenceList = ({ questionId }) => {
   
   return (
     <>
-      <ReferenceForm questionId={questionId} />
+      <ReferenceForm questionId={questionId} saveReference={saveReference} setReferenceList={setReference} />
       {isLoading && <LoadingSpinner />}
       {!isLoading && (
         <>

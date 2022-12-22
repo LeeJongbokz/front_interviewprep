@@ -38,7 +38,7 @@ const useHttpRequest = (isLoadingInit = false) => {
 
   const sendPostRequest = useCallback(
     async (requestOption, callback = () => {}) => {
-      setIsLoading(true);
+      // setIsLoading(true);
       const { endpoint, bodyData } = requestOption;
       try {
         const response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
@@ -60,14 +60,14 @@ const useHttpRequest = (isLoadingInit = false) => {
       } catch (err) {
         console.error(err);
       }
-      setIsLoading(false);
+      // setIsLoading(false);
     },
     [authCtx.token, authCtx.refreshToken]
   );
 
   const sendPutRequest = useCallback(
     async (requestOption, callback = () => {}) => {
-      setIsLoading(true);
+      // setIsLoading(true);
       const { endpoint, bodyData } = requestOption;
       try {
         const response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
@@ -89,14 +89,14 @@ const useHttpRequest = (isLoadingInit = false) => {
       } catch (err) {
         console.error(err);
       }
-      setIsLoading(false);
+      // setIsLoading(false);
     },
     [authCtx.token, authCtx.refreshToken]
   );
 
   const sendDelRequest = useCallback(
     async (requestOption, callback = () => {}) => {
-      setIsLoading(true);
+      // setIsLoading(true);
       const { endpoint, bodyData } = requestOption;
       try {
         const response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
@@ -118,7 +118,7 @@ const useHttpRequest = (isLoadingInit = false) => {
       } catch (err) {
         console.error(err);
       }
-      setIsLoading(false);
+      // setIsLoading(false);
     },
     [authCtx.token, authCtx.refreshToken]
   );
