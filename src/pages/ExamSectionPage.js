@@ -1,7 +1,7 @@
-import ExamSection from '../component/Exam/ExamSection';
+import ExamGate from '../component/Exam/ExamGate';
 
-const ExamSectionPage = () => {
-  return <ExamSection />;
+const ExamPage = () => {
+  return <ExamGate />;
 };
 
-export default ExamSectionPage;
+export default ExamPage;
