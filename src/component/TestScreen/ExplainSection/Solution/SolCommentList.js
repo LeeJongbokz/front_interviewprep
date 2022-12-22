@@ -11,8 +11,6 @@ import Link from '@mui/material/Link';
 
 import useHttpRequest from '../../../../hook/use-http';
 
-const COMMENTS = ['Comment1', 'Comment2'];
-
 const SolCommentList = ({ answerId }) => {
   const [ comments, setComments ] = useState([]);
   
@@ -28,27 +26,28 @@ const SolCommentList = ({ answerId }) => {
     sendGetRequest(`/answer/comment/${answerId}`, setCommentsHandler);
   }, [sendGetRequest, answerId]);
 
-  console.log(comments);
-  
   return (
     // <CardContent sx={{ backgroundColor: 'WhiteSmoke' }}>
     <CardContent>
       <Divider />
       <Table size="small">
         <TableBody>
-          {COMMENTS.map((item, idx) => (
-            <TableRow key={idx}>
-              <TableCell sx={{ border: 0 }}>{item}</TableCell>
+          {comments.map((item) => (
+            <TableRow key={item.id}>
+              <TableCell sx={{ border: 0 }}>{item.memberName}</TableCell>
+              <TableCell sx={{ border: 0 }}>{item.comment}</TableCell>
               <TableCell sx={{ border: 0, color: 'red', textAlign: 'right' }}>
+                {item.myAnswer && 
                 <Link
                   underline="none"
                   component="button"
                   onClick={() => {
-                    console.info(`remove! ${idx}`);
+                    console.info(`remove! ${item.id}`);
                   }}
                 >
                   삭제
                 </Link>
+                }
               </TableCell>
             </TableRow>
           ))}

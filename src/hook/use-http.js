@@ -11,7 +11,6 @@ const useHttpRequest = (isLoadingInit = false) => {
       setIsLoading(true);
       try {
         let response;
-        console.log(authCtx.token, authCtx.refreshToken);
         if (authCtx.token && authCtx.refreshToken) {
           response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
             headers: {

@@ -4,20 +4,23 @@ import useHttpRequest from '../../../../hook/use-http';
 
 import LoadingSpinner from '../../../UI/LoadingSpinner';
 import SolutionItem from './SolutionItem';
-import { getAnswerList, setAnswerList } from '../../TestScreenVariables';
+
+let lastQuestionId;
+let savedSolution = [];
 
 const SolutionList = ({ questionId }) => {
-  const storedAnswerList = getAnswerList();
-  const [answerArray, setAnswerArray] = useState(storedAnswerList);
-
+  const [answerArray, setAnswerArray] = useState([]);
   const { isLoading, sendGetRequest } = useHttpRequest();
+
   useEffect(() => {
     const answerArrayHandler = data => {
-      console.log(data.data.content);
       setAnswerArray(data.data.content);
-      setAnswerList(data.data.content);
+      lastQuestionId = questionId;
+      savedSolution = data?.data?.content || []
     };
-    if (answerArray.length < 1) {
+    if(lastQuestionId === questionId && savedSolution.length > 0 ){
+      setAnswerArray(savedSolution);
+    } else if (savedSolution.length === 0 || lastQuestionId !== questionId) {
       sendGetRequest(`/answer/solution/${questionId}/others`, answerArrayHandler);
     }
   }, [sendGetRequest, answerArray.length, questionId]);
@@ -32,6 +35,7 @@ const SolutionList = ({ questionId }) => {
             answerId={item.answerId}
             namae={item.name}
             answer={item.answer}
+            heart={item.heart}
             heartCnt={item.heartCnt}
             date={item.createdDate}
           />
