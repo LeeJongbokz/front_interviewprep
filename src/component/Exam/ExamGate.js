@@ -4,12 +4,14 @@ import ContainerUI from '../UI/ContainerUI';
 import ExamSection from './ExamSection';
 
 const ExamGate = () => {
-  const [examStart, setExamStart] = useState(-1);
+  const [examStart, setExamStart] = useState(0);
 
   useEffect(() => {
     const storedExamStart = +localStorage.getItem("exam");
     if(storedExamStart>0){
       setExamStart(storedExamStart)
+    } else {
+      setExamStart(-1);
     }
   }, []);
 

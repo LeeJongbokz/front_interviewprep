@@ -17,8 +17,6 @@ const ReferenceList = ({ questionId }) => {
   const [reference, setReference] = useState(savedReference);
   const { isLoading, sendGetRequest } = useHttpRequest();
 
-  console.log("LIST RERENDERED")
-
   const saveReference = (newReference) => savedReference = newReference;
 
   useEffect(() => {
