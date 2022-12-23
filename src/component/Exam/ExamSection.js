@@ -78,7 +78,6 @@ const ExamSection = ({examStart}) => {
         },
         submitCallback
       );
-      console.log('submit');
     }
   };
 
@@ -94,7 +93,7 @@ const ExamSection = ({examStart}) => {
             changeIdxHandler={changeIdxHandler}
             length={length}
           />
-          <Timer initSeconds={600-spentSec} />
+          <Timer initSeconds={Math.max(600-spentSec, 0)} />
           <Divider />
           <Box padding={2}>
             {exam.length > 0 && (
