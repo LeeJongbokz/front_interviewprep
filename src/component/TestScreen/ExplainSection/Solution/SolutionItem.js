@@ -4,15 +4,14 @@ import useHttpRequest from '../../../../hook/use-http';
 
 import SolCommentList from './SolCommentList';
 
-const SolutionItem = ({ answerId, namae, answer, heartCnt: initHeartCnt, heart }) => {
+const SolutionItem = ({ answerId, namae, answer, heartCnt: initHeartCnt, heart, date }) => {
   const [favorite, setFavorite] = useState(heart);
   const [heartCnt, setHeartCnt] = useState(initHeartCnt);
   const [commentVisible, setCommentVisible] = useState(false);
 
-  const { sendPostRequest } = useHttpRequest();
+  const { sendPostRequest, sendDelRequest } = useHttpRequest();
 
   const favoriteHandler = () => {
-    console.log('FAV');
     setFavorite(true);
     setHeartCnt(prevState => prevState + 1);
     sendPostRequest({
@@ -23,9 +22,14 @@ const SolutionItem = ({ answerId, namae, answer, heartCnt: initHeartCnt, heart }
     });
   };
   const unFavoriteHandler = () => {
-    console.log('UN_FAV');
     setFavorite(false);
     setHeartCnt(prevState => prevState - 1);
+    sendDelRequest({
+      endpoint: '/heart',
+      bodyData: {
+        answerId: answerId,
+      },
+    });
   };
 
   const toggleComment = () => {
@@ -36,7 +40,7 @@ const SolutionItem = ({ answerId, namae, answer, heartCnt: initHeartCnt, heart }
   return (
     <ExplainSectionCards
       namae={namae}
-      answer={answer}
+      content={answer}
       heartCnt={heartCnt}
       availFav={true}
       availComment={true}
@@ -45,6 +49,7 @@ const SolutionItem = ({ answerId, namae, answer, heartCnt: initHeartCnt, heart }
       unFavHandler={unFavoriteHandler}
       visibleChildren={commentVisible}
       CommentIconHandler={toggleComment}
+      date={date}
     >
       <SolCommentList answerId={answerId} />
     </ExplainSectionCards>

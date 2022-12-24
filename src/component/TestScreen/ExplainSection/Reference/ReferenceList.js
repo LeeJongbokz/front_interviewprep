@@ -6,39 +6,37 @@ import ReferenceForm from './ReferenceForm';
 import useHttpRequest from '../../../../hook/use-http';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
 
-// const REFERENCE_LIST = [
-//   {
-//     id: 1,
-//     namae: 'alpha',
-//     content: 'Reference #1',
-//     date: '2022-12-08',
-//     heartCnt: 1,
-//   },
-//   {
-//     id: 2,
-//     namae: 'beta',
-//     content: 'Reference #2',
-//     date: '2022-12-09',
-//     heartCnt: 3,
-//   },
-// ];
+let lastQuestionId;
+
+let savedReference = [];
 
 const ReferenceList = ({ questionId }) => {
-  const [reference, setReference] = useState([]);
+  if( questionId !== lastQuestionId){
+    savedReference = [];
+  }
+  const [reference, setReference] = useState(savedReference);
   const { isLoading, sendGetRequest } = useHttpRequest();
+
+  const saveReference = (newReference) => savedReference = newReference;
 
   useEffect(() => {
     const referenceListHandler = data => {
       if (data.success) {
         setReference(data.data.content);
-      }
+      } 
+      savedReference = data?.data?.content || [];
+      lastQuestionId = questionId;
     };
-    sendGetRequest(`/question/ref/${questionId}`, referenceListHandler);
-  }, [questionId, sendGetRequest]);
-
+    if( lastQuestionId === questionId && savedReference.length > 0 ){
+      // setReference(savedReference);
+    } else if (savedReference.length === 0 || lastQuestionId !== questionId) {
+      sendGetRequest(`/question/ref/${questionId}`, referenceListHandler);
+    }
+  }, [questionId, sendGetRequest, reference.length]);
+  
   return (
     <>
-      <ReferenceForm questionId={questionId} />
+      <ReferenceForm questionId={questionId} saveReference={saveReference} setReferenceList={setReference} />
       {isLoading && <LoadingSpinner />}
       {!isLoading && (
         <>

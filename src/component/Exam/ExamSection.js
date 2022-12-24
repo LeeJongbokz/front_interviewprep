@@ -13,9 +13,11 @@ import ContainerUI from '../UI/ContainerUI';
 import AnswerForm from './AnswerForm';
 import { useParams, useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../UI/LoadingSpinner';
+import Timer from './Timer';
 
-const ExamSection = () => {
+const ExamSection = ({examStart}) => {
   const inputRef = useRef();
+  const spentSec = Math.floor((+new Date() - examStart)/1000)
 
   const { examId } = useParams();
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const ExamSection = () => {
   const [exam, setExam] = useState([]);
   const [questionIdx, setQuestionIdx] = useState(0);
   const [length, setLength] = useState(0);
-  const { isLoading, sendGetRequest, sendPostRequest } = useHttpRequest();
+  const { isLoading, sendGetRequest, sendPostRequest } = useHttpRequest(true);
 
   const changeIdxHandler = index => {
     setQuestionIdx(index);
@@ -76,7 +78,6 @@ const ExamSection = () => {
         },
         submitCallback
       );
-      console.log('submit');
     }
   };
 
@@ -92,6 +93,7 @@ const ExamSection = () => {
             changeIdxHandler={changeIdxHandler}
             length={length}
           />
+          <Timer initSeconds={Math.max(600-spentSec, 0)} />
           <Divider />
           <Box padding={2}>
             {exam.length > 0 && (
