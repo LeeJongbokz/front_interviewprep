@@ -27,7 +27,7 @@ const Profile = () => {
   return (
     <ContainerUI>
       <ProfileHeader></ProfileHeader>
-      <Typography component="h1" variant="h5" fontWeight="bold" sx={{ marginBottom: '20px'}}>
+      <Typography component="h1" variant="h5" fontWeight="bold" sx={{ marginBottom: '20px' }}>
         회원 정보
       </Typography>
 

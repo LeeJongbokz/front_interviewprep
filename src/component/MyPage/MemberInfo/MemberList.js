@@ -17,18 +17,18 @@ const MemberList = ({ memberInfo }) => {
   });
 
   const { sendPutRequest } = useHttpRequest();
-  const { name, nickName, email} = inputs; // 비구조화 할당을 통해 값 추출
-  
+  const { name, nickName, email } = inputs; // 비구조화 할당을 통해 값 추출
+
   const onChange = (e) => {
 
-    const { value, name, nickName, email} = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    const { value, name, nickName, email } = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setInputs({
       ...inputs, // 기존의 input 객체를 복사한 뒤
       [name]: value, // name 키를 가진 값을 value 로 설정
       [nickName]: value,
       [email]: value,
     });
-    
+
   };
   const infoUpdateHandler = () => {
     sendPutRequest({
@@ -99,10 +99,10 @@ const MemberList = ({ memberInfo }) => {
       </Box>
       <div>
 
-        <Button type="submit" variant="contained" label={'margin="normal"'} onClick={infoUpdateHandler} sx={{marginTop: '20px'}}>
+        <Button type="submit" variant="contained" label={'margin="normal"'} onClick={infoUpdateHandler} sx={{ marginTop: '20px' }}>
           저장
         </Button>
-        <Button type="submit" variant="contained" label={'margin="normal"'} onClick={onReset} sx={{marginTop: '20px', marginLeft:'5px'}}>
+        <Button type="submit" variant="contained" label={'margin="normal"'} onClick={onReset} sx={{ marginTop: '20px', marginLeft: '5px' }}>
           초기화
         </Button>
       </div>
