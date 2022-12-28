@@ -12,10 +12,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Link } from 'react-router-dom';
-import useHttpRequest from '../../hook/use-http';
-import RecentProblem from './RecentProblem';
+import useHttpRequest from '../../../hook/use-http';
+import RecentProblem from '../RecentProblem';
 
-const Test = ({ memberInfo }) => {
+const MemberList = ({ memberInfo }) => {
 
   console.log(memberInfo);
   const [value, setValue] = useState(0);
@@ -276,4 +276,4 @@ const Test = ({ memberInfo }) => {
   )
 }
 
-export default Test;
+export default MemberList;

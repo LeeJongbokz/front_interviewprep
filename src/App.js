@@ -11,6 +11,9 @@ import SignUpPage from './pages/SignUpPage';
 import ExamPage from './pages/ExamPage';
 import FrontendExamPage from './pages/ExamSectionPage';
 import MyPage from './pages/MyPage';
+import PasswordUpdatePage from './pages/PasswordUpdatePage';
+import RecentProblemPage from './pages/RecentProblemPage';
+import RecentExamPage from './pages/RecentExamPage';
 import TestScreenPage from './pages/TestScreenPage';
 import Modal from './component/UI/Modal';
 
@@ -54,10 +57,10 @@ function App() {
               path="/signup"
               element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUpPage />}
             />
-            <Route
-              path="/my-page"
-              element={authCtx.isLoggedIn ? <MyPage /> : <Navigate to="/" />}
-            />
+            <Route path="/my-page" element={authCtx.isLoggedIn ? <MyPage /> : <Navigate to="/" />} />
+            <Route path="/passwordUpdate" element={<PasswordUpdatePage />} />
+            <Route path="/RecentProblem" element={<RecentProblemPage />} />
+            <Route path="/RecentExam" element={<RecentExamPage />} />
           </Route>
         </Switch>
       </div>

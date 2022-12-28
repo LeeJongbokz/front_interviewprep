@@ -2,10 +2,10 @@ import TableRow from '@mui/material/TableRow';
 import { useNavigate } from 'react-router-dom';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
-import classes from '../Test/Problem.module.css';
+import classes from '../../Test/Problem.module.css';
 
 
-const RecentProblem = ({ memberInfo }) => {
+const RecentProblemTable = ({ memberInfo }) => {
   console.log(memberInfo.answers);
   const navigate = useNavigate();
 
@@ -57,4 +57,4 @@ const RecentProblem = ({ memberInfo }) => {
   );
 };
 
-export default RecentProblem;
+export default RecentProblemTable;
