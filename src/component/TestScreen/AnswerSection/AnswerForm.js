@@ -13,16 +13,22 @@ import FormLabel from '@mui/material/FormLabel';
 
 import SubmitButtonGroup from './SubmitButtonGroup';
 
-const AnswerForm = ({ questionId }) => {
+const AnswerForm = ({ questionId, setLoginModalOpened }) => {
   const [answer, setAnswer] = useState('');
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
   const submitHandler = async () => {
+    console.log(authCtx.refreshToken, authCtx.token)
+    if( typeof authCtx.token === "undefined" || typeof authCtx.refreshToken === "undefined"){
+      setLoginModalOpened(true);
+      return;
+    }
+    
     if (window.confirm('답안을 제출하시겠습니까?')) {
       const bodyData = {
         questionId,
-        content: answer.slice(0, 50),
+        content: answer.slice(0, 200),
       };
       const response = await fetch(`${BACKEND_BASE_URL}/answer/`, {
         method: 'POST',
@@ -58,9 +64,9 @@ const AnswerForm = ({ questionId }) => {
           onChange={changeHandler}
           placeholder="답을 입력해주세요"
           inputProps={{
-            maxLength: 50,
+            maxLength: 200,
           }}
-          helperText={`${answer.length}/50`}
+          helperText={`${answer.length}/200`}
         />
       </FormControl>
       <SubmitButtonGroup questionId={questionId} submitHandler={submitHandler} />

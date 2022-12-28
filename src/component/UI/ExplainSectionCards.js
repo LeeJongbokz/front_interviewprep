@@ -48,7 +48,7 @@ const ExplainSectionCards = ({
           <Typography>{date.slice(0,10)}</Typography>
         </Box>
         <Box padding={1}>
-          <Typography sx={{ lineBreak:"anywhere"}}><Linkify>{content}</Linkify></Typography>
+          <Typography sx={{ lineBreak:"anywhere"}}><Linkify properties={{target: '_blank'}}>{content}</Linkify></Typography>
         </Box>
       </CardContent>
       <CardActions

@@ -2,17 +2,19 @@ import React from 'react';
 
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Container from '@mui/material/Container';
+// import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 const PaperUI = ({children, title}) => {
   return (
-    <Container maxWidth="sm" sx={{ marginTop: { sm: '100px' } }}>
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          marginX: "auto",
+          marginTop:"10%",
+          maxWidth:"500px"
         }}
       >
         <Grid padding={4} component={Paper} square>
@@ -22,7 +24,6 @@ const PaperUI = ({children, title}) => {
           {children}
         </Grid>
       </Box>
-    </Container>
   );
 };
 
