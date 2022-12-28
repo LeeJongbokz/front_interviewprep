@@ -1,10 +1,28 @@
 import { useState } from 'react';
-import ExplainSectionCards from '../../../UI/ExplainSectionCards';
 import useHttpRequest from '../../../../hook/use-http';
 
-import SolCommentList from './SolCommentList';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CommentIcon from '@mui/icons-material/Comment';
+import ExplainSectionCardMoreButton from '../../../UI/ExplainSectionCardMoreButton';
 
-const SolutionItem = ({ answerId, namae, answer, heartCnt: initHeartCnt, heart, date }) => {
+import SolCommentList from './SolCommentList';
+import Linkify from 'react-linkify';
+
+const SolutionItem = ({
+  answerId,
+  namae,
+  answer,
+  heartCnt: initHeartCnt,
+  heart,
+  date,
+  myown = true,
+}) => {
   const [favorite, setFavorite] = useState(heart);
   const [heartCnt, setHeartCnt] = useState(initHeartCnt);
   const [commentVisible, setCommentVisible] = useState(false);
@@ -33,26 +51,37 @@ const SolutionItem = ({ answerId, namae, answer, heartCnt: initHeartCnt, heart, 
   };
 
   const toggleComment = () => {
-    console.log('Tog Comm');
     setCommentVisible(prevState => !prevState);
   };
 
   return (
-    <ExplainSectionCards
-      namae={namae}
-      content={answer}
-      heartCnt={heartCnt}
-      availFav={true}
-      availComment={true}
-      favorite={favorite}
-      favHandler={favoriteHandler}
-      unFavHandler={unFavoriteHandler}
-      visibleChildren={commentVisible}
-      CommentIconHandler={toggleComment}
-      date={date}
-    >
-      <SolCommentList answerId={answerId} />
-    </ExplainSectionCards>
+    <Card eveluation={0} variant="outlined" sx={{ marginY: 2 }}>
+      <CardContent>
+        <Box padding={1} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography component="div" sx={{ fontWeight: 'bold' }}>
+            {namae}
+          </Typography>
+          <Typography>{date.slice(0, 10)}</Typography>
+        </Box>
+        <Box padding={1}>
+          <Typography sx={{ lineBreak: 'anywhere' }}>
+            <Linkify properties={{ target: '_blank' }}>{answer}</Linkify>
+          </Typography>
+        </Box>
+      </CardContent>
+      <CardActions
+        disableSpacing
+        sx={{ marginLeft: 1, color: 'text.secondary', display: 'flex', gap: '5px' }}
+      >
+        {favorite && <FavoriteIcon sx={{ cursor: 'pointer' }} onClick={unFavoriteHandler} />}
+        {!favorite && <FavoriteBorderIcon sx={{ cursor: 'pointer' }} onClick={favoriteHandler} />}
+        <Typography>{heartCnt}</Typography>
+        <CommentIcon sx={{ cursor: 'pointer' }} onClick={toggleComment} />
+        <Typography>0</Typography>
+        {myown && <ExplainSectionCardMoreButton />}
+      </CardActions>
+      {commentVisible && <SolCommentList answerId={answerId} />}
+    </Card>
   );
 };
 
