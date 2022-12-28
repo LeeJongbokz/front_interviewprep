@@ -48,6 +48,7 @@ const ReferenceList = ({ questionId }) => {
               content={item.link}
               date={item.createdDate}
               heartCnt={item.heartCnt}
+              myown={item.myown}
             />
           ))}
         </>

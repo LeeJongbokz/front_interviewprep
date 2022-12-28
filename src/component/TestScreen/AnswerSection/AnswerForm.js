@@ -13,7 +13,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 import SubmitButtonGroup from './SubmitButtonGroup';
 
-const AnswerForm = ({ questionId, setLoginModalOpened }) => {
+const AnswerForm = ({ questionId }) => {
   const [answer, setAnswer] = useState('');
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const AnswerForm = ({ questionId, setLoginModalOpened }) => {
   const submitHandler = async () => {
     console.log(authCtx.refreshToken, authCtx.token)
     if( typeof authCtx.token === "undefined" || typeof authCtx.refreshToken === "undefined"){
-      setLoginModalOpened(true);
+      authCtx.toggleLoginModal();
       return;
     }
     

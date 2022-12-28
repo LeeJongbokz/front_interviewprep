@@ -9,7 +9,6 @@ import CardActions from '@mui/material/CardActions';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
-import ExplainSectionCardMoreButton from '../../../UI/ExplainSectionCardMoreButton';
 
 import SolCommentList from './SolCommentList';
 import Linkify from 'react-linkify';
@@ -21,7 +20,6 @@ const SolutionItem = ({
   heartCnt: initHeartCnt,
   heart,
   date,
-  myown = true,
 }) => {
   const [favorite, setFavorite] = useState(heart);
   const [heartCnt, setHeartCnt] = useState(initHeartCnt);
@@ -78,7 +76,6 @@ const SolutionItem = ({
         <Typography>{heartCnt}</Typography>
         <CommentIcon sx={{ cursor: 'pointer' }} onClick={toggleComment} />
         <Typography>0</Typography>
-        {myown && <ExplainSectionCardMoreButton />}
       </CardActions>
       {commentVisible && <SolCommentList answerId={answerId} />}
     </Card>

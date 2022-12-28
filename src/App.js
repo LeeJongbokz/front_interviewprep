@@ -12,9 +12,10 @@ import ExamPage from './pages/ExamPage';
 import FrontendExamPage from './pages/ExamSectionPage';
 import MyPage from './pages/MyPage';
 import TestScreenPage from './pages/TestScreenPage';
+import Modal from './component/UI/Modal';
 
 import AuthContext from './store/auth-context';
-import {THEME_COLOR} from './global_variables';
+import { THEME_COLOR } from './global_variables';
 
 function App() {
   const theme = createTheme({
@@ -37,26 +38,30 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-    <div className="App">
-      <Switch>
-        <Route element={<Layout />}>
-          <Route path="/" element={<TestListPage />} />
-          <Route path="/test" element={<TestListPage />} />
-          <Route path="/exam" element={<ExamPage />} />
-          <Route path="/exam/:examId" element={<FrontendExamPage />} />
-          <Route path="/test/:questionId" element={<TestScreenPage />} />
-          <Route
-            path="/login"
-            element={authCtx.isLoggedIn ? <Navigate to="/" replace={true} /> : <LoginPage />}
-          />
-          <Route
-            path="/signup"
-            element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUpPage />}
-          />
-          <Route path="/my-page" element={authCtx.isLoggedIn ? <MyPage /> : <Navigate to="/" />} />
-        </Route>
-      </Switch>
-    </div>
+      <div className="App">
+        <Switch>
+          <Route element={<Layout />}>
+            <Route path="/" element={<TestListPage />} />
+            <Route path="/test" element={<TestListPage />} />
+            <Route path="/exam" element={<ExamPage />} />
+            <Route path="/exam/:examId" element={<FrontendExamPage />} />
+            <Route path="/test/:questionId" element={<TestScreenPage />} />
+            <Route
+              path="/login"
+              element={authCtx.isLoggedIn ? <Navigate to="/" replace={true} /> : <LoginPage />}
+            />
+            <Route
+              path="/signup"
+              element={authCtx.isLoggedIn ? <Navigate to="/" /> : <SignUpPage />}
+            />
+            <Route
+              path="/my-page"
+              element={authCtx.isLoggedIn ? <MyPage /> : <Navigate to="/" />}
+            />
+          </Route>
+        </Switch>
+      </div>
+      <Modal />
     </ThemeProvider>
   );
 }

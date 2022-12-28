@@ -17,7 +17,7 @@ const PaperUI = ({children, title}) => {
           maxWidth:"500px"
         }}
       >
-        <Grid padding={4} component={Paper} square>
+        <Grid padding={4} component={Paper} square={true}>
           <Typography align="center" component="h1" variant="h5">
             {title}
           </Typography>

@@ -13,53 +13,59 @@ import useHttpRequest from '../../../../hook/use-http';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
 
 const SolCommentList = ({ answerId }) => {
-  const [ comments, setComments ] = useState([]);
+  const [comments, setComments] = useState([]);
   const { isLoading, sendGetRequest, sendDelRequest } = useHttpRequest();
 
   useEffect(() => {
-    const setCommentsHandler = (data) => {
-      if(data?.success){
+    const setCommentsHandler = data => {
+      if (data?.success) {
         setComments(data.data.content);
       }
-    }  
+    };
     sendGetRequest(`/answer/comment/${answerId}`, setCommentsHandler);
   }, [sendGetRequest, answerId]);
 
-  const deleteHandler = (id) => {
-    if(window.confirm("삭제 하시겠습니까?")){
-      sendDelRequest({ endpoint : `/answer/comment/${id}`});
+  const deleteHandler = id => {
+    if (window.confirm('삭제 하시겠습니까?')) {
+      sendDelRequest({ endpoint: `/answer/comment/${id}` });
       setComments(prevState => {
         return prevState.filter(item => item.id !== id);
       });
     }
-  }
+  };
 
   return (
     // <CardContent sx={{ backgroundColor: 'WhiteSmoke' }}>
     <CardContent>
       <Divider />
-      <Table size="small">
-        <TableBody>
-          {isLoading && <LoadingSpinner />}
-          {!isLoading && comments.map((item) => (
-            <TableRow key={item.id}>
-              <TableCell sx={{ border: 0 }}>{item.memberName}</TableCell>
-              <TableCell sx={{ border: 0 }}>{item.comment}</TableCell>
-              <TableCell sx={{ border: 0, color: 'red', textAlign: 'right' }}>
-                {item.myAnswer && 
-                <Link
-                  underline="none"
-                  component="button"
-                  onClick={() => {deleteHandler(item.id)}}
-                >
-                  삭제
-                </Link>
-                }
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      {isLoading && <LoadingSpinner />}
+      {/* {!isLoading && comments.length === 0 && '등록된 댓글이 없습니다.'} */}
+      {!isLoading && comments.length > 0 && (
+        <Table size="small">
+          <TableBody>
+            {!isLoading &&
+              comments.map(item => (
+                <TableRow key={item.id}>
+                  <TableCell sx={{ border: 0 }}>{item.memberName}</TableCell>
+                  <TableCell sx={{ border: 0 }}>{item.comment}</TableCell>
+                  <TableCell sx={{ border: 0, color: 'red', textAlign: 'right' }}>
+                    {item.myAnswer && (
+                      <Link
+                        underline="none"
+                        component="button"
+                        onClick={() => {
+                          deleteHandler(item.id);
+                        }}
+                      >
+                        삭제
+                      </Link>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      )}
       <SolCommentInput answerId={answerId} setComments={setComments} />
     </CardContent>
   );

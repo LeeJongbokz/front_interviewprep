@@ -5,12 +5,16 @@ import { Link } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
-import PaperUI from '../UI/PaperUI';
 import DividingLine from '../UI/DividingLine';
 import IconGroup from './IconGroup';
 
-const LoginForModal = ({callback=() => {}}) => {
+const LoginForModal = ({ isOpen = false, callback = () => {} }) => {
   const authCtx = useContext(AuthContext);
 
   const formRef = useRef();
@@ -38,45 +42,60 @@ const LoginForModal = ({callback=() => {}}) => {
       .catch(e => {
         alert('인증이 실패했거나 오류가 발생했습니다!');
       });
-      callback();
+    callback();
     return;
   };
 
   return (
-    <PaperUI title="Login">
-      <form onSubmit={onSubmitHandler} ref={formRef} noValidate>
-        <TextField
-          id="email"
-          label="email"
-          type="email"
-          margin="normal"
-          inputRef={emailRef}
-          autoComplete="on"
-          required
-          fullWidth
-        />
-        <TextField
-          id="password"
-          label="passwords"
-          type="password"
-          margin="normal"
-          inputRef={passwordRef}
-          autoComplete="off"
-          required
-          fullWidth
-        />
-        <ButtonGroup fullWidth sx={{ marginTop: 2 }}>
-          <Button type="submit" variant="contained">
-            로그인
-          </Button>
-          <Button variant="outlined" component={Link} to="/signup">
-            회원가입
-          </Button>
-        </ButtonGroup>
-      </form>
-      <DividingLine />
-      <IconGroup />
-    </PaperUI>
+    <Modal open={isOpen} onClose={callback}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          marginX: 'auto',
+          marginTop: '10%',
+          maxWidth: '500px',
+        }}
+      >
+        <Grid padding={4} component={Paper} square={true}>
+          <Typography align="center" component="h1" variant="h5">
+            Login
+          </Typography>
+          <form onSubmit={onSubmitHandler} ref={formRef} noValidate>
+            <TextField
+              id="email"
+              label="email"
+              type="email"
+              margin="normal"
+              inputRef={emailRef}
+              autoComplete="on"
+              required
+              fullWidth
+            />
+            <TextField
+              id="password"
+              label="passwords"
+              type="password"
+              margin="normal"
+              inputRef={passwordRef}
+              autoComplete="off"
+              required
+              fullWidth
+            />
+            <ButtonGroup fullWidth sx={{ marginTop: 2 }}>
+              <Button type="submit" variant="contained">
+                로그인
+              </Button>
+              <Button variant="outlined" component={Link} to="/signup">
+                회원가입
+              </Button>
+            </ButtonGroup>
+          </form>
+          <DividingLine />
+          <IconGroup />
+        </Grid>
+      </Box>
+    </Modal>
   );
 };
 
