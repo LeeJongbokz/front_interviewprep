@@ -19,7 +19,7 @@ const ProblemList = ({ question }) => {
         <TableRow>
           <TableCellColumnHead body="" /> 
           <TableCellColumnHead body="" /> 
-          <TableCellColumnHead body="문제 내용" /> 
+          <TableCellColumnHead body="제목" /> 
           <TableCellColumnHead body="분류" />
         </TableRow>
       </TableHead>

@@ -40,17 +40,9 @@ const Login = () => {
       .catch(e => {
         alert('인증이 실패했거나 오류가 발생했습니다!');
       });
-
-    // navigate('/');
     return;
   };
 
-  // function ClickHander() {
-  //   const res = API.get(
-  //     `oauth/authorize?client_id=7631d083ab97ccae8103b0aed5d67b05&redirect_uri=http://52.3.173.210:8080/oauth2/code/kakao&response_type=code`
-  //   );
-  //   console.log(res);
-  // }
   return (
     <PaperUI title="Login">
       <form onSubmit={onSubmitHandler} ref={formRef} noValidate>

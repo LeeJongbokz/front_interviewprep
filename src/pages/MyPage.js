@@ -1,4 +1,4 @@
-import Profile from '../component/MyPage/Profile';
+import Profile from '../component/MyPage/MemberInfo/Profile';
 
 const MyPage = () => {
   return (

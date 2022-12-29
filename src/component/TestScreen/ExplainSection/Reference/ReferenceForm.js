@@ -23,7 +23,7 @@ const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
         endpoint: `/question/ref/`,
         bodyData: {
           questionId: questionId,
-          link: reference,
+          link: reference.slice(0, 1000),
         },
       });
 
@@ -53,10 +53,10 @@ const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
           onChange={changeHandler}
           value={reference}
           placeholder="Input your reference"
-          // inputProps={{
-          //   maxLength: 50,
-          // }}
-          // helperText={`${answer.length}/50`}
+          inputProps={{
+            maxLength: 1000,
+          }}
+          helperText={`${reference.length}/1000`}
         />
       </FormControl>
       <Stack direction="row" spacing={1} marginBottom={1}>

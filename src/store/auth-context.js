@@ -6,8 +6,10 @@ const AuthContext = React.createContext({
   token: '',
   refreshToken : '',
   isLoggedIn: false,
+  loginModalOpened: false,
   login: () => {},
   logout: () => {},
+  toggleLoginModal: () => {},
 });
 
 export const AuthContextProvider = props => {
@@ -18,6 +20,7 @@ export const AuthContextProvider = props => {
 
   const [token, setToken] = useState(initialToken);
   const [refreshToken, setRefreshToken] = useState(initialReftoken);
+  const [loginModalOpened, setLoginModalOpened] = useState(false);
   const userIsLoggedIn = !!token;
 
   const loginHandler = async (id, pw) => {
@@ -70,12 +73,18 @@ export const AuthContextProvider = props => {
     return;
   };
 
+  const toggleLoginModalHandler = () => {
+    setLoginModalOpened(prevState => !prevState);
+  }
+
   const contextValue = {
     token: token,
     refreshToken: refreshToken,
     isLoggedIn: userIsLoggedIn,
+    loginModalOpened: loginModalOpened,
     login: loginHandler,
     logout: logoutHandler,
+    toggleLoginModal: toggleLoginModalHandler,
   };
 
   return <AuthContext.Provider value={contextValue}>{props.children}</AuthContext.Provider>;

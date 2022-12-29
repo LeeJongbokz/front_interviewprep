@@ -7,11 +7,11 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 
 const SolCommentInput = ({ answerId, setComments }) => {
-  const inputRef = useRef();
+  const textRef = useRef();
   const { sendPostRequest } = useHttpRequest();
 
   const commentSubmitHandler = async () => {
-    const val = inputRef.current.value;
+    const val = textRef.current.value;
     await sendPostRequest({
       endpoint: '/answer/comment/',
       bodyData: {
@@ -22,12 +22,12 @@ const SolCommentInput = ({ answerId, setComments }) => {
     setComments(prevState => {
       return [...prevState, { id: 3000, memberName: 'TESTING', comment: val, myAnswer: true }];
     });
-    inputRef.current.value = '';
+    textRef.current.value = '';
   };
 
   return (
     <FormControl fullWidth variant="standard" margin="dense">
-      <TextField multiline fullWidth inputRef={inputRef} />
+      <TextField multiline fullWidth inputRef={textRef} />
       <Stack direction="row" marginTop={1} spacing={1}>
         <Button variant="contained" onClick={commentSubmitHandler}>
           등록

@@ -9,7 +9,6 @@ import ExplainSection from './ExplainSection/ExplainSection';
 
 const TestScreen = () => {
   const { questionId } = useParams();
-
   return (
     <Container maxWidth={false} sx={{ backgroundColor: 'white', paddingTop: '50px' }}>
       <Grid container borderTop={1} borderColor={'lightGray'} minHeight="88vh">
