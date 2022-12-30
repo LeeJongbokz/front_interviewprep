@@ -12,7 +12,7 @@ import Link from '@mui/material/Link';
 import useHttpRequest from '../../../../hook/use-http';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
 
-const SolCommentList = ({ answerId }) => {
+const SolCommentList = ({ answerId, count }) => {
   const [comments, setComments] = useState([]);
   const { isLoading, sendGetRequest, sendDelRequest } = useHttpRequest();
 
@@ -22,8 +22,10 @@ const SolCommentList = ({ answerId }) => {
         setComments(data.data.content);
       }
     };
-    sendGetRequest(`/answer/comment/${answerId}`, setCommentsHandler);
-  }, [sendGetRequest, answerId]);
+    if(count > 0){
+      sendGetRequest(`/answer/comment/${answerId}`, setCommentsHandler);
+    }
+  }, [sendGetRequest, answerId, count]);
 
   const deleteHandler = id => {
     if (window.confirm('삭제 하시겠습니까?')) {

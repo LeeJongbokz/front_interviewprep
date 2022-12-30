@@ -19,6 +19,7 @@ const SolutionItem = ({
   answer,
   heartCnt: initHeartCnt,
   heart,
+  commentCnt = 0,
   date,
 }) => {
   const [favorite, setFavorite] = useState(heart);
@@ -75,9 +76,9 @@ const SolutionItem = ({
         {!favorite && <FavoriteBorderIcon sx={{ cursor: 'pointer' }} onClick={favoriteHandler} />}
         <Typography>{heartCnt}</Typography>
         <CommentIcon sx={{ cursor: 'pointer' }} onClick={toggleComment} />
-        <Typography>0</Typography>
+        <Typography>{commentCnt}</Typography>
       </CardActions>
-      {commentVisible && <SolCommentList answerId={answerId} />}
+      {commentVisible && <SolCommentList answerId={answerId} count={commentCnt} />}
     </Card>
   );
 };

@@ -44,11 +44,13 @@ const ReferenceList = ({ questionId }) => {
           {reference.map(item => (
             <ReferenceItem
               key={item.id}
-              namae={'NAME'}
+              refId={item.id}
+              namae={item.name}
               content={item.link}
               date={item.createdDate}
               heartCnt={item.heartCnt}
-              myown={item.myown}
+              myown={item.myRef}
+              setReference={setReference}
             />
           ))}
         </>

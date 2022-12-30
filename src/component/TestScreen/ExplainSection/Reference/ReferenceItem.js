@@ -12,7 +12,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExplainSectionCardMoreButton from '../../../UI/ExplainSectionCardMoreButton';
 import Linkify from 'react-linkify';
 
-const ReferenceItem = ({ namae, content, date, heartCnt: initHeartCnt, myown = false }) => {
+const ReferenceItem = ({ refId, namae, content, date, heartCnt: initHeartCnt, myown = false, setReference }) => {
   const [favorite, setFavorite] = useState(false);
   const [heartCnt, setHeartCnt] = useState(initHeartCnt);
 
@@ -35,7 +35,7 @@ const ReferenceItem = ({ namae, content, date, heartCnt: initHeartCnt, myown = f
           <Typography component="div" sx={{ fontWeight: 'bold' }}>
             {namae}
           </Typography>
-          <Typography>{date.slice(0, 10)}</Typography>
+          <Typography>{date}</Typography>
         </Box>
         <Box padding={1}>
           <Typography sx={{ lineBreak: 'anywhere' }}>
@@ -58,7 +58,7 @@ const ReferenceItem = ({ namae, content, date, heartCnt: initHeartCnt, myown = f
         {favorite && <FavoriteIcon sx={{ cursor: 'pointer' }} onClick={unFavoriteHandler} />}
         {!favorite && <FavoriteBorderIcon sx={{ cursor: 'pointer' }} onClick={favoriteHandler} />}
         <Typography>{heartCnt}</Typography>
-        {myown && <ExplainSectionCardMoreButton />}
+        {myown && <ExplainSectionCardMoreButton refId={refId} setReference={setReference} />}
       </CardActions>
     </Card>
   );

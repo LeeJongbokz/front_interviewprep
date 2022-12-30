@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import ContainerUI from '../UI/ContainerUI';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -12,11 +12,14 @@ import { Link } from 'react-router-dom';
 import classes from './ExamList.module.css';
 import useHttpRequest from '../../hook/use-http';
 import LoadingSpinner from '../UI/LoadingSpinner';
+import AuthContext from '../../store/auth-context';
 
 const ExamList = () => {
   const [examList, setExamList] = useState([]);
   const { isLoading, sendGetRequest } = useHttpRequest();
 
+  const authCtx = useContext(AuthContext);
+  
   useEffect(() => {
     const examListHandler = data => {
       if (data.success) {
@@ -45,7 +48,7 @@ const ExamList = () => {
               item
               key={examId}
               component={Link}
-              to={`/exam/${examId}`}
+              to={ authCtx.isLoggedIn ? `/exam/${examId}` : "/login/"}
               xs={6} sm={3} md={2}
               sx={{
                 textDecoration: 'none',
