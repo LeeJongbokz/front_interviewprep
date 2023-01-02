@@ -15,7 +15,7 @@ const SolCommentInput = ({ answerId, setComments }) => {
       setComments(prevState => {
         return [
           ...prevState,
-          { id: data.data.id, memberName: 'NAME', comment: val, myAnswer: true },
+          { id: data.data.id, memberName: data.data.name, comment: val, myAnswer: true },
         ];
       });
     };

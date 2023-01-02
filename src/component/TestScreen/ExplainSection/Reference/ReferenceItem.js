@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-// import useHttpRequest from '../../../../hook/use-http';
+import useHttpRequest from '../../../../hook/use-http';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -16,16 +16,22 @@ const ReferenceItem = ({ refId, namae, content, date, heartCnt: initHeartCnt, my
   const [favorite, setFavorite] = useState(false);
   const [heartCnt, setHeartCnt] = useState(initHeartCnt);
 
-  // const { sendPostRequest } = useHttpRequest();
+  const { sendPostRequest, sendDelRequest } = useHttpRequest();
 
   const favoriteHandler = () => {
     setFavorite(true);
     setHeartCnt(prevState => prevState + 1);
+    sendPostRequest({
+      endpoint: `/ref-heart/${refId}`
+    });
   };
 
   const unFavoriteHandler = () => {
     setFavorite(false);
     setHeartCnt(prevState => prevState - 1);
+    sendDelRequest({
+      endpoint: `/ref-heart/${refId}`
+    });
   };
 
   return (
@@ -35,7 +41,7 @@ const ReferenceItem = ({ refId, namae, content, date, heartCnt: initHeartCnt, my
           <Typography component="div" sx={{ fontWeight: 'bold' }}>
             {namae}
           </Typography>
-          <Typography>{date}</Typography>
+          <Typography>{date.slice(0,10)}</Typography>
         </Box>
         <Box padding={1}>
           <Typography sx={{ lineBreak: 'anywhere' }}>

@@ -33,8 +33,8 @@ const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
             {
               id: data.data.id,
               link: reference.slice(0, 1000),
-              name: 'NAME',
-              date: 'XXXX-XX-XX',
+              name: data.data.name,
+              date: data.data.createdDate.slice(0,10),
               heartCnt: 0,
               myRef: true,
             },
