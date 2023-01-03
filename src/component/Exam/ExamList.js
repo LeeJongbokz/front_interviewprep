@@ -36,7 +36,7 @@ const ExamList = () => {
   return (
     <ContainerUI>
       <Typography component="h1" variant="h5" fontWeight="bold">
-        모의고사
+        실력 테스트
       </Typography>
       {isLoading && <LoadingSpinner />}
       {!isLoading && <Grid container marginTop={3} spacing={3} columns={6} justify="center">
