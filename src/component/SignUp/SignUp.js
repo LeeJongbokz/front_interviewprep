@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import useHttpRequest from '../../hook/use-http';
 
 // import * as API from '../utils/api';import { flexbox } from '@mui/system';
 // import styled from 'styled-components';
@@ -13,37 +14,54 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setpasswordConfirm] = useState('');
   const [name, setName] = useState('');
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const onSubmit = async e => {
+  const { sendPostRequest } = useHttpRequest();
+
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (password !== passwordConfirm) {
       return alert('비밀번호화 비밀번호 확인이 같지 않습니다. 다시 확인해주세요!');
     }
-    const bodyData = {
-      name: name,
-      email: email,
-      password: password,
-      passwordConfirm: passwordConfirm,
-    };
-    const response = await fetch(`http://52.202.27.18:8080/members/signup`, {
-      method: 'POST',
-      body: JSON.stringify(bodyData),
-      headers: {
-        'Content-Type': 'application/json',
+    await sendPostRequest({
+      endpoint: '/members/signup',
+      bodyData: {
+        name: name,
+        email: email,
+        password: password,
+        passwordConfirm: passwordConfirm,
       },
     });
-    console.log(e.target.email.value);
-    console.log(e.target.password.value);
-    console.log(e.target.passwordConfirm.value);
-    console.log(e.target.name.value);
-    if (!response.ok) {
-      alert('오류가 발생했습니다. 다시 시도해주세요!');
-      return;
-    }
-    navigate('/');
-    return;
-  };
+  }
+  // const onSubmit = async e => {
+  //   e.preventDefault();
+  //   if (password !== passwordConfirm) {
+  //     return alert('비밀번호화 비밀번호 확인이 같지 않습니다. 다시 확인해주세요!');
+  //   }
+  //   const bodyData = {
+  //     name: name,
+  //     email: email,
+  //     password: password,
+  //     passwordConfirm: passwordConfirm,
+  //   };
+  //   const response = await fetch(`http://52.202.27.18:8080/members/signup`, {
+  //     method: 'POST',
+  //     body: JSON.stringify(bodyData),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   });
+  //   console.log(e.target.email.value);
+  //   console.log(e.target.password.value);
+  //   console.log(e.target.passwordConfirm.value);
+  //   console.log(e.target.name.value);
+  //   if (!response.ok) {
+  //     alert('오류가 발생했습니다. 다시 시도해주세요!');
+  //     return;
+  //   }
+  //   navigate('/');
+  //   return;
+  // };
 
   //test start
   // const [inputs, setInputs] = useState({
@@ -84,7 +102,7 @@ const SignUp = () => {
   }
   return (
     <PaperUI title="Sign Up">
-      <form onSubmit={onSubmit} noValidate>
+      <form onSubmit={onSubmitHandler} noValidate>
         <TextField
           id="name"
           label="name"
