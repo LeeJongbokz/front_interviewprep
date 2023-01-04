@@ -14,7 +14,7 @@ const PasswordUpdate = ({ memberInfo }) => {
     newPassword: memberInfo.password,
     confirmPassword: memberInfo.password
   });
-
+  const [query,setQuery] = useState([]); 
   const { sendPutRequest } = useHttpRequest();
   const {  password, newPassword, confirmPassword } = inputs; // 비구조화 할당을 통해 값 추출
 
@@ -27,18 +27,26 @@ const PasswordUpdate = ({ memberInfo }) => {
       [newPassword]: value,
       [confirmPassword]: value,
     });
-
-    console.log(e.target)
+    setQuery({
+      ...query,
+      [e.target.id]:value
+    })
+    // console.log(e.target)
     console.log(value)
+    console.log(inputs)
+    console.log(query)
   };
   const passwordUpdateHandler = () => {
     console.log(newPassword)
     console.log(password)
+    
     sendPutRequest({
-      endpoint: 'members/password/change',
+      endpoint: '/members/password/change',
       bodyData: {
-        password: password,
-        newPassword: newPassword
+        ...query
+        // password: password
+        // newPassword: newPasswordS
+        // confirmPassword: confirmPassword
       },
     });
   };
@@ -53,7 +61,7 @@ const PasswordUpdate = ({ memberInfo }) => {
 
   return (
     <div>
-      {/* <Typography component="h5" fontWeight="800" >
+      <Typography component="h5" fontWeight="800" >
         비밀번호
       </Typography>
       <TextField
@@ -66,7 +74,7 @@ const PasswordUpdate = ({ memberInfo }) => {
         fullWidth
         value={password}
         onChange={onChange}
-      /> */}
+      />
       <Typography component="h5" fontWeight="800" >
         새 비밀번호
       </Typography>
