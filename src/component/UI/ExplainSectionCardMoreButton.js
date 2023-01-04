@@ -4,16 +4,30 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-const ExplainSectionCardMoreButton = () => {
+import useHttpRequest from '../../hook/use-http';
+
+const ExplainSectionCardMoreButton = ({refId, setReference}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const { sendDelRequest } = useHttpRequest();
 
   const menuClickHandler = event => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const deleteHandler = () => {
+    if(window.confirm("등록하신 레퍼런스를 삭제하시겠습니까?")){
+      sendDelRequest({
+        endpoint: `/question/ref/${refId}`,
+      });
+      setReference(prevState => prevState.filter(item => item.id !== refId));
+    }
+  } 
 
   return (
     <>
@@ -26,7 +40,7 @@ const ExplainSectionCardMoreButton = () => {
       >
         <MenuItem
           onClick={() => {
-            console.log('delete');
+            deleteHandler();
             handleClose();
           }}
           sx={{ fontSize: '13px', color: 'red' }}

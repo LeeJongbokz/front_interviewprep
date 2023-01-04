@@ -37,6 +37,7 @@ const SolutionList = ({ questionId }) => {
             answer={item.answer}
             heart={item.heart}
             heartCnt={item.heartCnt}
+            commentCnt={item.commentCnt}
             date={item.createdDate}
           />
       ))}

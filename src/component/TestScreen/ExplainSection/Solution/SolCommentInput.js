@@ -11,17 +11,27 @@ const SolCommentInput = ({ answerId, setComments }) => {
   const { sendPostRequest } = useHttpRequest();
 
   const commentSubmitHandler = async () => {
+    const postResponseHandler = data => {
+      setComments(prevState => {
+        return [
+          ...prevState,
+          { id: data.data.id, memberName: data.data.name, comment: val, myAnswer: true },
+        ];
+      });
+    };
+
     const val = textRef.current.value;
-    await sendPostRequest({
-      endpoint: '/answer/comment/',
-      bodyData: {
-        answerId: answerId,
-        comment: val,
+    await sendPostRequest(
+      {
+        endpoint: '/answer/comment/',
+        bodyData: {
+          answerId: answerId,
+          comment: val,
+        },
       },
-    });
-    setComments(prevState => {
-      return [...prevState, { id: 3000, memberName: 'TESTING', comment: val, myAnswer: true }];
-    });
+      postResponseHandler
+    );
+    
     textRef.current.value = '';
   };
 

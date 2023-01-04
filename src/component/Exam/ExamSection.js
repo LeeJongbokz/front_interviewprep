@@ -36,11 +36,11 @@ const ExamSection = ({examStart}) => {
     const examHandler = data => {
       if(data.success){
         setExam(
-          data.data.map(i => {
+          data.data.questions.map(i => {
             return { questionid: i.id, title: i.title, content: '' };
           })
         );
-        setLength(data.data.length);
+        setLength(data.data.questions.length);
       }
      
     };

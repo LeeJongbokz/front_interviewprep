@@ -19,7 +19,6 @@ const AnswerForm = ({ questionId }) => {
   const navigate = useNavigate();
 
   const submitHandler = async () => {
-    console.log(authCtx.refreshToken, authCtx.token)
     if( typeof authCtx.token === "undefined" || typeof authCtx.refreshToken === "undefined"){
       authCtx.toggleLoginModal();
       return;

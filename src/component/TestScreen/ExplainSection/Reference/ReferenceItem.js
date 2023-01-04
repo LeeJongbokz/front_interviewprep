@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-// import useHttpRequest from '../../../../hook/use-http';
+import useHttpRequest from '../../../../hook/use-http';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -12,20 +12,26 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExplainSectionCardMoreButton from '../../../UI/ExplainSectionCardMoreButton';
 import Linkify from 'react-linkify';
 
-const ReferenceItem = ({ namae, content, date, heartCnt: initHeartCnt, myown = false }) => {
+const ReferenceItem = ({ refId, namae, content, date, heartCnt: initHeartCnt, myown = false, setReference }) => {
   const [favorite, setFavorite] = useState(false);
   const [heartCnt, setHeartCnt] = useState(initHeartCnt);
 
-  // const { sendPostRequest } = useHttpRequest();
+  const { sendPostRequest, sendDelRequest } = useHttpRequest();
 
   const favoriteHandler = () => {
     setFavorite(true);
     setHeartCnt(prevState => prevState + 1);
+    sendPostRequest({
+      endpoint: `/ref-heart/${refId}`
+    });
   };
 
   const unFavoriteHandler = () => {
     setFavorite(false);
     setHeartCnt(prevState => prevState - 1);
+    sendDelRequest({
+      endpoint: `/ref-heart/${refId}`
+    });
   };
 
   return (
@@ -35,7 +41,7 @@ const ReferenceItem = ({ namae, content, date, heartCnt: initHeartCnt, myown = f
           <Typography component="div" sx={{ fontWeight: 'bold' }}>
             {namae}
           </Typography>
-          <Typography>{date.slice(0, 10)}</Typography>
+          <Typography>{date.slice(0,10)}</Typography>
         </Box>
         <Box padding={1}>
           <Typography sx={{ lineBreak: 'anywhere' }}>
@@ -58,7 +64,7 @@ const ReferenceItem = ({ namae, content, date, heartCnt: initHeartCnt, myown = f
         {favorite && <FavoriteIcon sx={{ cursor: 'pointer' }} onClick={unFavoriteHandler} />}
         {!favorite && <FavoriteBorderIcon sx={{ cursor: 'pointer' }} onClick={favoriteHandler} />}
         <Typography>{heartCnt}</Typography>
-        {myown && <ExplainSectionCardMoreButton />}
+        {myown && <ExplainSectionCardMoreButton refId={refId} setReference={setReference} />}
       </CardActions>
     </Card>
   );

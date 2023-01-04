@@ -8,22 +8,27 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 import useHttpRequest from '../../../../hook/use-http';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
 
-const SolCommentList = ({ answerId }) => {
+const SolCommentList = ({ answerId, count }) => {
   const [comments, setComments] = useState([]);
+  const [page, setPage] = useState(0);
   const { isLoading, sendGetRequest, sendDelRequest } = useHttpRequest();
 
   useEffect(() => {
     const setCommentsHandler = data => {
       if (data?.success) {
-        setComments(data.data.content);
+        setComments( prevState => [...prevState, ...data.data.content]);
       }
     };
-    sendGetRequest(`/answer/comment/${answerId}`, setCommentsHandler);
-  }, [sendGetRequest, answerId]);
+    if(count > 0){
+      sendGetRequest(`/answer/comment/${answerId}?page=${page}`, setCommentsHandler);
+    }
+  }, [sendGetRequest, answerId, count, page]);
 
   const deleteHandler = id => {
     if (window.confirm('삭제 하시겠습니까?')) {
@@ -38,13 +43,11 @@ const SolCommentList = ({ answerId }) => {
     // <CardContent sx={{ backgroundColor: 'WhiteSmoke' }}>
     <CardContent>
       <Divider />
-      {isLoading && <LoadingSpinner />}
-      {/* {!isLoading && comments.length === 0 && '등록된 댓글이 없습니다.'} */}
-      {!isLoading && comments.length > 0 && (
+      {count === 0 && <Box sx={{textAlign:"center", margin:2}}>등록된 댓글이 없습니다.</Box>}
+      {comments.length > 0 && (
         <Table size="small">
           <TableBody>
-            {!isLoading &&
-              comments.map(item => (
+            {comments.map(item => (
                 <TableRow key={item.id}>
                   <TableCell sx={{ border: 0 }}>{item.memberName}</TableCell>
                   <TableCell sx={{ border: 0 }}>{item.comment}</TableCell>
@@ -63,9 +66,13 @@ const SolCommentList = ({ answerId }) => {
                   </TableCell>
                 </TableRow>
               ))}
+              {!isLoading && (page+1)*10 < count && <TableRow>
+                <TableCell colSpan={3}><Button variant="outlined" onClick={() => { setPage(prevPage => prevPage+1)}} sx={{width:"100%", textAlign : "center"}}>댓글 더보기</Button></TableCell>
+              </TableRow>}
           </TableBody>
         </Table>
       )}
+      {isLoading && <LoadingSpinner />}
       <SolCommentInput answerId={answerId} setComments={setComments} />
     </CardContent>
   );

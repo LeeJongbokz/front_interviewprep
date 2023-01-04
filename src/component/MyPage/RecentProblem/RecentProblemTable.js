@@ -37,7 +37,7 @@ const RecentProblemTable = ({ memberInfo }) => {
     <TableBody>
       <TableRow className={classes.row}>
         <TableCell component="th" scope="row">번호</TableCell>
-        <TableCell>내용</TableCell>
+        <TableCell>제목</TableCell>
         <TableCell>날짜</TableCell>
       </TableRow>
       {memberInfo.answers.map((item) => {

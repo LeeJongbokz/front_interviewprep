@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import AuthContext from '../../../../store/auth-context';
 
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
@@ -12,34 +14,48 @@ import useHttpRequest from '../../../../hook/use-http';
 const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
   const [reference, setReference] = useState('');
   const { sendPostRequest } = useHttpRequest();
+  const authCtx = useContext(AuthContext);
 
   const changeHandler = e => {
     setReference(e.target.value);
   };
 
   const submitHandler = async () => {
-    if (window.confirm('레퍼런스를 등록 하시겠습니까?')) {
-      await sendPostRequest({
-        endpoint: `/question/ref/`,
-        bodyData: {
-          questionId: questionId,
-          link: reference.slice(0, 1000),
-        },
-      });
+    if( typeof authCtx.token === "undefined" || typeof authCtx.refreshToken === "undefined"){
+      authCtx.toggleLoginModal();
+      return;
+    }
 
-      setReferenceList(prevState => {
-        const newState = [
-          {
-            id: 9000,
-            link: reference,
-            date: 'XXXX-XX-XX',
-            heartCnt: 0,
+    if (window.confirm('레퍼런스를 등록 하시겠습니까?')) {
+      const postResponseHandler = data => {
+        setReferenceList(prevState => {
+          const newState = [
+            {
+              id: data.data.id,
+              link: reference.slice(0, 1000),
+              name: data.data.name,
+              date: data.data.createdDate.slice(0,10),
+              heartCnt: 0,
+              myRef: true,
+            },
+            ...prevState,
+          ];
+          saveReference(newState);
+          return newState;
+        });
+      };
+
+      await sendPostRequest(
+        {
+          endpoint: `/question/ref/`,
+          bodyData: {
+            questionId: questionId,
+            link: reference.slice(0, 1000),
           },
-          ...prevState,
-        ];
-        saveReference(newState);
-        return newState;
-      });
+        },
+        postResponseHandler
+      );
+
       setReference('');
     }
   };
