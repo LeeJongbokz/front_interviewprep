@@ -31,6 +31,7 @@ const MemberList = ({ memberInfo }) => {
 
   };
   const infoUpdateHandler = () => {
+    console.log(nickName)
     sendPutRequest({
       endpoint: '/members/change',
       bodyData: {

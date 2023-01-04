@@ -9,44 +9,31 @@ import useHttpRequest from '../../../hook/use-http';
 const PasswordUpdate = ({ memberInfo }) => {
 
   console.log(memberInfo);
-  // const [value, setValue] = useState(0);
-
-  // const [updatePasswords, setUpdatePasswords] = useState({
-  //   newPassword: '',
-  //   confirmPassword: ''
-  // });
   const [inputs, setInputs] = useState({
     password: memberInfo.password,
-    newPassword: '',
-    confirmPassword: ''
+    newPassword: memberInfo.password,
+    confirmPassword: memberInfo.password
   });
 
   const { sendPutRequest } = useHttpRequest();
-  const { password, newPassword, confirmPassword } = inputs; // 비구조화 할당을 통해 값 추출
-  // const { newPassword, confirmPassword } = updatePasswords;
+  const {  password, newPassword, confirmPassword } = inputs; // 비구조화 할당을 통해 값 추출
 
   const onChange = (e) => {
 
     const { value, password, newPassword, confirmPassword } = e.target; // 우선 e.target 에서 name 과 value 를 추출
     setInputs({
       ...inputs, // 기존의 input 객체를 복사한 뒤 // name 키를 가진 값을 value 로 설정
-
       [password]: value,
       [newPassword]: value,
       [confirmPassword]: value,
     });
-    // const { newPassword, confirmPassword } = e.target;
-    // setUpdatePasswords({
-    //   ...updatePasswords,
-    //   [confirmPassword]: value,
-    //   [newPassword]: value
-    // });
+
     console.log(e.target)
     console.log(value)
   };
   const passwordUpdateHandler = () => {
-    console.log(password)
     console.log(newPassword)
+    console.log(password)
     sendPutRequest({
       endpoint: 'members/password/change',
       bodyData: {
@@ -59,14 +46,14 @@ const PasswordUpdate = ({ memberInfo }) => {
   const onReset = () => {
     setInputs({
       password: memberInfo.password,
-      newPassword: '',
-      confirmPassword: ''
+      newPassword: memberInfo.newPassword,
+      confirmPassword: memberInfo.confirmPassword
     })
   };
 
   return (
     <div>
-      <Typography component="h5" fontWeight="800" >
+      {/* <Typography component="h5" fontWeight="800" >
         비밀번호
       </Typography>
       <TextField
@@ -79,7 +66,7 @@ const PasswordUpdate = ({ memberInfo }) => {
         fullWidth
         value={password}
         onChange={onChange}
-      />
+      /> */}
       <Typography component="h5" fontWeight="800" >
         새 비밀번호
       </Typography>
