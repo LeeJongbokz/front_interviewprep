@@ -15,6 +15,7 @@ const MemberList = ({ memberInfo }) => {
     email: memberInfo.email,
     password: memberInfo.password,
   });
+  const [query,setQuery] = useState([]); 
 
   const { sendPutRequest } = useHttpRequest();
   const { name, nickName, email } = inputs; // 비구조화 할당을 통해 값 추출
@@ -28,18 +29,25 @@ const MemberList = ({ memberInfo }) => {
       [nickName]: value,
       [email]: value,
     });
-
+    setQuery({
+      ...query,
+      [e.target.id]:value
+    })
+    console.log(e.target.id)
+    console.log(e.target.value)
+    console.log(query)
   };
+  
   const infoUpdateHandler = () => {
     console.log(nickName)
+    console.log(query)
     sendPutRequest({
       endpoint: '/members/change',
       bodyData: {
-        name: name,
-        nickName: nickName,
-        email: email,
+        ...query
       },
     });
+    
   };
   const onReset = () => {
     setInputs({
