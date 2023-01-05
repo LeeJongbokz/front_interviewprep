@@ -1,5 +1,6 @@
 import { Typography, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { THEME_COLOR } from '../../global_variables';
 
 const Timer = ({ initSeconds = 600 }) => {
   const [leftSeconds, setLeftSeconds] = useState(initSeconds);
@@ -35,7 +36,29 @@ const Timer = ({ initSeconds = 600 }) => {
   const [minutes, seconds] = divValueAndRest(leftSeconds, 60);
 
   return (
-    <Box component="div" sx={{ textAlign: 'center', width: '90%', margin: 2 }}>
+    <Box
+      component="div"
+      sx={{
+        position: 'absolute',
+        top: '65px',
+        width : {
+          xs : "80%",
+          sm : "auto",
+        },
+        right: {
+          sm : 0
+        },
+        padding: 2,
+        marginRight: {
+          sm : 1
+        },
+        border: 1,
+        borderRadius: 3,
+        textAlign: 'center',
+        borderColor: THEME_COLOR,
+        color: THEME_COLOR,
+      }}
+    >
       <Typography component="span" variant="h5">
         남은 시간 {fillTwoNumber(minutes)}:{fillTwoNumber(seconds)}
       </Typography>
