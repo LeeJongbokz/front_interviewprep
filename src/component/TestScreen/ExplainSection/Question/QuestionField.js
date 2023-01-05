@@ -30,8 +30,15 @@ const QuestionField = ({ questionId }) => {
   return (
     <Box marginTop={2}>
       {question && (
-        <Typography variant="h6" gutterBottom>
-          문제: {question}
+        <Typography variant="h6" gutterBottom 
+        sx={{
+          border:1 ,
+          borderColor:'lightgray',
+          borderRadius:4,
+          // boxShadow:1,
+          padding: 2,
+        }}>
+          {question}
         </Typography>
       )}
     </Box>
