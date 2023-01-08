@@ -120,7 +120,7 @@ const Header = () => {
     >
       <Tabs value={value} onChange={handleChange} centered>
         <Tab label="문제" component={Link} to="/test" />
-        <Tab label="모의고사" component={Link} to="/exam" />
+        <Tab label="실력테스트" component={Link} to="/exam" />
       </Tabs>
     </Box>
   );
