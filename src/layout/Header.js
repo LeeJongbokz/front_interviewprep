@@ -9,7 +9,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import companyLogo from '../img/logo.PNG';
+import companyLogo from '../img/logo_1.png';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -120,7 +120,7 @@ const Header = () => {
     >
       <Tabs value={value} onChange={handleChange} centered>
         <Tab label="문제" component={Link} to="/test" />
-        <Tab label="모의고사" component={Link} to="/exam" />
+        <Tab label="실력테스트" component={Link} to="/exam" />
       </Tabs>
     </Box>
   );
@@ -128,9 +128,9 @@ const Header = () => {
   return (
     <Box sx={{ flwxGrow: 1 }}>
       <AppBar position="static" variant="outLine" sx={{ boxShadow: 'none' }}>
-        <Toolbar 
+        <Toolbar
           sx={{
-            justifyContent:"space-between",
+            justifyContent: "space-between",
             backgroundColor: 'white',
             borderBottom: 'solid 1px #f4f4f4',
           }}
@@ -145,7 +145,7 @@ const Header = () => {
               textDecoration: 'none',
             }}
           >
-            <img src={companyLogo} alt="logo" style={{ height: '30px' }} />
+            <img src={companyLogo} alt="logo" style={{ height: '40px', overflow: 'hidden' }} />
           </Typography>
           {categoryButtons}
           {headerButtons}

@@ -21,7 +21,7 @@ const RecentExamTable = ({ memberInfo }) => {
 
     const betweenTimeHour = Math.floor(betweenTime / 60);
     if (betweenTimeHour < 24) {
-      return `${betweenTimeHour}시간전`;
+      return `${betweenTimeHour-8}시간전`;
     }
 
     const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
@@ -41,15 +41,15 @@ const RecentExamTable = ({ memberInfo }) => {
         <TableCell>날짜</TableCell>
       </TableRow>
       {memberInfo.answers.map((item) => {
-        console.log(item)
+        // console.log(item)
+        console.log(timeForToday(item.createdDate))
         return (
           <>
             <TableRow hover className={classes.row} onClick={() => navigate(`/test/${item["@id"]}`)}>
               <TableCell component="th" scope="row">{item.id}</TableCell>
               <TableCell>{item.content}</TableCell>
-              <TableCell>{item.modifiedDate}</TableCell>
+              <TableCell>{timeForToday(item.createdDate)}</TableCell>
             </TableRow>
-
           </>
         )
       })}

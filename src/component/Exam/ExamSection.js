@@ -15,9 +15,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../UI/LoadingSpinner';
 import Timer from './Timer';
 
-const ExamSection = ({examStart}) => {
+const ExamSection = ({ examStart }) => {
   const inputRef = useRef();
-  const spentSec = Math.floor((+new Date() - examStart)/1000)
+  const spentSec = Math.floor((+new Date() - examStart) / 1000);
 
   const { examId } = useParams();
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const ExamSection = ({examStart}) => {
 
   useEffect(() => {
     const examHandler = data => {
-      if(data.success){
+      if (data.success) {
         setExam(
           data.data.questions.map(i => {
             return { questionid: i.id, title: i.title, content: '' };
@@ -42,7 +42,6 @@ const ExamSection = ({examStart}) => {
         );
         setLength(data.data.questions.length);
       }
-     
     };
     sendGetRequest(`/exam/kit/${examId}`, examHandler); // TODO 이것 연동!!
   }, [sendGetRequest, examId]);
@@ -53,17 +52,22 @@ const ExamSection = ({examStart}) => {
       prevState[questionIdx].content = inputText;
       return prevState;
     });
-    inputRef.current.value = '';
-    setQuestionIdx(Math.min(questionIdx + 1, length - 1));
-    checkDone(exam);
+
+    setQuestionIdx(prevIdx => {
+      if (prevIdx !== length - 1) {
+        inputRef.current.value = '';
+      }
+      return Math.min(prevIdx + 1, length - 1);
+    });
+
     // Optimization : let's make useReducer!!
   };
 
-  const checkDone = exam => {
-    if (exam.filter(i => i.content.trim().length > 0).length !== length) {
-      return 0;
-    }
-    if (window.confirm('모든 문제가 완료되었습니다! 제출하시겠습니까?')) {
+  const submitExam = () => {
+    // if (exam.filter(i => i.content.trim().length > 0).length !== length) {
+    //   return 0;
+    // }
+    if (window.confirm('모의고사 답변을 제출하시겠습니까?')) {
       const submitCallback = () => {
         navigate('/exam/');
       };
@@ -87,14 +91,7 @@ const ExamSection = ({examStart}) => {
         <LoadingSpinner />
       ) : (
         <>
-          <NumberPad
-            answerList={exam.map(i => i.content.length > 0)}
-            questionIdx={questionIdx}
-            changeIdxHandler={changeIdxHandler}
-            length={length}
-          />
-          <Timer initSeconds={Math.max(600-spentSec, 0)} />
-          <Divider />
+          <Timer initSeconds={Math.max(600 - spentSec, 0)} />
           <Box padding={2}>
             {exam.length > 0 && (
               <>
@@ -110,10 +107,22 @@ const ExamSection = ({examStart}) => {
           <Box padding={2}>
             <AnswerForm inputRef={inputRef} />
             <Stack direction="row" spacing={1}>
-              <Button variant="contained" onClick={submitHandler} m={1}>
-                제출하기
+              <Button variant="outlined" onClick={submitHandler} m={1}>
+                저장
               </Button>
             </Stack>
+          </Box>
+          <Divider />
+          <NumberPad
+            answerList={exam}
+            questionIdx={questionIdx}
+            changeIdxHandler={changeIdxHandler}
+            length={length}
+          />
+          <Box>
+            <Button sx={{ marginLeft: 1 }} onClick={submitExam} variant="contained">
+              최종제출
+            </Button>
           </Box>
         </>
       )}
