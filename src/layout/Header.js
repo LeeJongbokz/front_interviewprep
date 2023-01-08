@@ -9,7 +9,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import companyLogo from '../img/logo.PNG';
+import companyLogo from '../img/logo_1.png';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -145,7 +145,7 @@ const Header = () => {
               textDecoration: 'none',
             }}
           >
-            <img src={companyLogo} alt="logo" style={{ height: '30px' }} />
+            <img src={companyLogo} alt="logo" style={{ height: '40px',overflow: 'hidden' }} />
           </Typography>
           {categoryButtons}
           {headerButtons}
