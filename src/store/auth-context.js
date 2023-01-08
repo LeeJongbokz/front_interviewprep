@@ -3,8 +3,8 @@ import { useCookies } from 'react-cookie';
 import { BACKEND_BASE_URL } from '../global_variables';
 
 const AuthContext = React.createContext({
-  token: '',
-  refreshToken : '',
+  token: null,
+  refreshToken : null,
   isLoggedIn: false,
   loginModalOpened: false,
   login: () => {},
