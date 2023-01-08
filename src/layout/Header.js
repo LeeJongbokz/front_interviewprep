@@ -128,9 +128,9 @@ const Header = () => {
   return (
     <Box sx={{ flwxGrow: 1 }}>
       <AppBar position="static" variant="outLine" sx={{ boxShadow: 'none' }}>
-        <Toolbar 
+        <Toolbar
           sx={{
-            justifyContent:"space-between",
+            justifyContent: "space-between",
             backgroundColor: 'white',
             borderBottom: 'solid 1px #f4f4f4',
           }}
@@ -145,7 +145,7 @@ const Header = () => {
               textDecoration: 'none',
             }}
           >
-            <img src={companyLogo} alt="logo" style={{ height: '40px',overflow: 'hidden' }} />
+            <img src={companyLogo} alt="logo" style={{ height: '40px', overflow: 'hidden' }} />
           </Typography>
           {categoryButtons}
           {headerButtons}
