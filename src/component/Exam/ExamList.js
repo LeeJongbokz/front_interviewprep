@@ -25,7 +25,7 @@ const ExamList = () => {
       if (data.success) {
         setExamList(
           data.data.map(i => {
-            return { id: i.id, title: i.title };
+            return { id: i.id, title: i.title, image: i.picture };
           })
         );
       }
@@ -39,62 +39,72 @@ const ExamList = () => {
         실력 테스트
       </Typography>
       {isLoading && <LoadingSpinner />}
-      {!isLoading && <Grid container marginTop={3} spacing={3} columns={6} justify="center">
-        { examList.map(i => {
-          const examId = i.id;
-          const title = i.title;
-          return (
-            <Grid
-              item
-              key={examId}
-              component={Link}
-              to={ authCtx.isLoggedIn ? `/exam/${examId}` : "/login/"}
-              xs={6} sm={3} md={2}
-              sx={{
-                textDecoration: 'none',
-                color: 'inherit',
-                alignSelf: 'center',
-                justifySelf: 'center',
-              }}
-            >
-              <Box
+      {!isLoading && (
+        <Grid container marginTop={3} spacing={3} columns={6} justify="center">
+          {examList.map(i => {
+            const examId = i.id;
+            const title = i.title;
+            const image = i.image;
+            return (
+              <Grid
+                item
+                key={examId}
+                component={Link}
+                to={authCtx.isLoggedIn ? `/exam/${examId}` : '/login/'}
+                xs={6}
+                sm={3}
+                md={2}
                 sx={{
-                  position:"relative",
-                  margin: 'auto',
-                  height: 400,
-                  maxWidth: '350px',
-                  border: 1,
-                  borderColor: 'rgba(0, 0, 0, 0.12)',
-                  borderRadius: 3,
+                  textDecoration: 'none',
+                  color: 'inherit',
+                  alignSelf: 'center',
+                  justifySelf: 'center',
                 }}
               >
-                <img
-                  className={classes.examImage}
-                  src="https://www.zdnet.com/a/img/resize/e0a9cadd3b0038b854680cff5a197bdf96580443/2021/07/19/8a337c80-5ed6-43a1-98fb-b981d420890f/programming-languages-shutterstock-1680857539.jpg?auto=webp&width=1280"
-                  alt="noImg"
-                />
-
-                <Typography
-                  component="div"
-                  margin={1}
-                  sx={{ height: '24px', fontWeight:600 }}
-                  gutterBottom
+                <Box
+                  sx={{
+                    position: 'relative',
+                    margin: 'auto',
+                    height: 400,
+                    maxWidth: '350px',
+                    border: 1,
+                    borderColor: 'rgba(0, 0, 0, 0.12)',
+                    borderRadius: 3,
+                  }}
                 >
-                  {title || '제목'}
-                </Typography>
-                <Typography component="div" margin={2} sx={{ color: 'gray', height: '80px' }}>
-                  부제목
-                </Typography>
-                <Stack direction="row" margin={1} spacing={1} sx={{ position:"absolute", bottom:0}}>
-                  <Chip size='small' variant="outlined" label="JavaScript" color="success" />
-                  <Chip size='small' variant="outlined" label="JAVA" color="success" />
-                  <Chip size='small' variant="outlined" label="Spring" color="success" />
-                </Stack>
-              </Box>
-            </Grid>
-          );
-        })}
-      </Grid>}
+                  <Box sx={{ height: '200px' }}>
+                    <img
+                      className={classes.examImage}
+                      src={image}
+                    />
+                  </Box>
+                  <Typography
+                    component="div"
+                    margin={1}
+                    sx={{ height: '24px', fontWeight: 600 }}
+                    gutterBottom
+                  >
+                    {title || '제목'}
+                  </Typography>
+                  <Typography component="div" margin={2} sx={{ color: 'gray', height: '80px' }}>
+                    부제목
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    margin={1}
+                    spacing={1}
+                    sx={{ position: 'absolute', bottom: 0 }}
+                  >
+                    <Chip size="small" variant="outlined" label="JavaScript" color="success" />
+                    <Chip size="small" variant="outlined" label="JAVA" color="success" />
+                    <Chip size="small" variant="outlined" label="Spring" color="success" />
+                  </Stack>
+                </Box>
+              </Grid>
+            );
+          })}
+        </Grid>
+      )}
     </ContainerUI>
   );
 };
