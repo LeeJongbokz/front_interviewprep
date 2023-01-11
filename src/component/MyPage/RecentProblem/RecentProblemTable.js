@@ -6,7 +6,7 @@ import classes from '../../Test/Problem.module.css';
 
 
 const RecentProblemTable = ({ memberInfo }) => {
-  console.log(memberInfo.answers);
+  // console.log(memberInfo.answers);
   const navigate = useNavigate();
 
   const timeForToday = (value) => {
@@ -31,7 +31,6 @@ const RecentProblemTable = ({ memberInfo }) => {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   }
-  timeForToday()
 
   return (
     <TableBody>
@@ -41,16 +40,13 @@ const RecentProblemTable = ({ memberInfo }) => {
         <TableCell>날짜</TableCell>
       </TableRow>
       {memberInfo.answers.map((item) => {
-        console.log(item)
+        // console.log(item)
         return (
-          <>
-            <TableRow hover className={classes.row} onClick={() => navigate(`/test/${item["@id"]}`)}>
-              <TableCell component="th" scope="row">{item.id}</TableCell>
-              <TableCell>{item.questionTitle}</TableCell>
-              <TableCell>{timeForToday(item.createdDate)}</TableCell>
-            </TableRow>
-
-          </>
+          <TableRow hover className={classes.row} onClick={() => navigate(`/test/${item["@id"]}`)}>
+            <TableCell component="th" scope="row">{item.id}</TableCell>
+            <TableCell>{item.questionTitle}</TableCell>
+            <TableCell>{timeForToday(item.createdDate)}</TableCell>
+          </TableRow>
         )
       })}
     </TableBody>

@@ -1,8 +1,3 @@
-// import Card from '@mui/material/Card';
-// import CardContent from '@mui/material/CardContent';
-// import Typography from '@mui/material/Typography';
-// import { Button } from '@mui/material';
-// import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from 'react-router-dom';
 import classes from './Problem.module.css';
 
@@ -18,33 +13,8 @@ const Problem = ({ problem }) => {
       <TableCell sx={{width:"20px"}}>{problem.status && <CheckIcon sx={{fontSize:"15px"}} color="success" />}</TableCell>
       <TableCell>{problem.title}</TableCell>
       <TableCell>{problem.type || '-'}</TableCell>
-      
     </TableRow>
   );
-
-  // grid version
-  // return (
-  //   <Card variant="outlined" className={classes.card} onClick={() => navigate(`/test/${problem.id}`)}>
-  //     <CardContent>
-  //       <Typography>{problem.id}번</Typography>
-  //       <Tooltip title={problem.title || '-'} placement="bottom">
-  //         <Typography
-  //           sx={{
-  //             display: '-webkit-box',
-  //             overflow: 'hidden',
-  //             WebkitBoxOrient: 'vertical',
-  //             WebkitLineClamp: 2,
-  //             height: '50px',
-  //           }}
-  //         >
-  //           문제: {problem.title || '-'}
-  //         </Typography>
-  //       </Tooltip>
-  //       <Typography>Level : {problem?.level || '-'}</Typography>
-  //       <Typography>분류: {problem.type || '-'}</Typography>
-  //     </CardContent>
-  //   </Card>
-  // );
 };
 
 export default Problem;

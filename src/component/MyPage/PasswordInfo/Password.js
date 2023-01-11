@@ -20,18 +20,17 @@ const Password = () => {
   useEffect(() => {
     const memberInfoHandler = data => {
       setMemberInfo(data.data);
-      console.log(data.data);
+      // console.log(data.data);
     };
     sendGetRequest(`/members/userInfo`, memberInfoHandler);
   }, [sendGetRequest]);
 
   return (
     <ContainerUI>
-      <ProfileHeader></ProfileHeader>
+      <ProfileHeader initValue={1} />
       <Typography component="h1" variant="h5" fontWeight="bold" sx={{ marginBottom: '20px' }}>
         비밀번호 변경
       </Typography>
-
       <Card noValidate variant="outlined" sx={{ marginBottom: '20px', padding: '20px' }}>
         {isLoading && <LoadingSpinner />}
         {!isLoading && <PasswordUpdate memberInfo={memberInfo} />}

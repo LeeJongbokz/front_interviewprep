@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+// import Tab from '@mui/material/Tab';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
@@ -113,14 +113,12 @@ const Header = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        '& > *': {
-          m: 1,
-        },
+        margin: 1,
       }}
     >
-      <Tabs value={value} onChange={handleChange} centered>
-        <Tab label="문제" component={Link} to="/test" />
-        <Tab label="실력테스트" component={Link} to="/exam" />
+      <Tabs value={value}  onChange={handleChange} centered>
+        {/* <Tab label="문제" component={Link} to="/test" /> */}
+        {/* <Tab label="실력테스트" component={Link} to="/exam" /> */}
       </Tabs>
     </Box>
   );

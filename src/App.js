@@ -8,8 +8,8 @@ import Layout from './layout/Layout';
 import LoginPage from './pages/LoginPage';
 import TestListPage from './pages/TestListPage';
 import SignUpPage from './pages/SignUpPage';
-import ExamPage from './pages/ExamPage';
-import FrontendExamPage from './pages/ExamSectionPage';
+// import ExamPage from './pages/ExamPage';
+// import FrontendExamPage from './pages/ExamSectionPage';
 import MyPage from './pages/MyPage';
 import PasswordUpdatePage from './pages/PasswordUpdatePage';
 import RecentProblemPage from './pages/RecentProblemPage';
@@ -46,8 +46,8 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/" element={<TestListPage />} />
             <Route path="/test" element={<TestListPage />} />
-            <Route path="/exam" element={<ExamPage />} />
-            <Route path="/exam/:examId" element={<FrontendExamPage />} />
+            {/* <Route path="/exam" element={<ExamPage />} />
+            <Route path="/exam/:examId" element={<FrontendExamPage />} /> */}
             <Route path="/test/:questionId" element={<TestScreenPage />} />
             <Route
               path="/login"
