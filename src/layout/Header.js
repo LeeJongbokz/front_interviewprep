@@ -80,7 +80,7 @@ const Header = () => {
             to="/my-page"
             sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
           >
-            mypage
+            마이페이지
           </Button>
         </MenuItem>
         <MenuItem>
@@ -92,7 +92,7 @@ const Header = () => {
             }}
             sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
           >
-            Logout
+            로그아웃
           </Button>
         </MenuItem>
       </Menu>
@@ -103,7 +103,7 @@ const Header = () => {
       to="/login"
       sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
     >
-      Login
+      로그인
     </Button>
   );
 
