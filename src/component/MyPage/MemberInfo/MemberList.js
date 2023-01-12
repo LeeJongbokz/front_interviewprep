@@ -22,25 +22,32 @@ const MemberList = ({ memberInfo }) => {
 
   const onChange = (e) => {
 
-    const { value, name, nickName, email } = e.target; // 우선 e.target 에서 name 과 value 를 추출
-    setInputs({
-      ...inputs, // 기존의 input 객체를 복사한 뒤
-      [name]: value, // name 키를 가진 값을 value 로 설정
-      [nickName]: value,
-      [email]: value,
+    // const { value, name, nickName, email, targetId } = e.target; // 우선 e.target 에서 name 과 value 를 추출
+    
+    const { value, id:targetId } = e.target;
+    // setInputs({
+    //   ...inputs, // 기존의 input 객체를 복사한 뒤
+    //   [name]: value, // name 키를 가진 값을 value 로 설정
+    //   [nickName]: value,
+    //   [email]: value,
+    // });
+    setInputs((prevState) => {
+      return { ...prevState, [targetId] : value }
     });
+
     setQuery({
       ...query,
-      [e.target.id]:value
-    })
-    console.log(e.target.id)
-    console.log(e.target.value)
-    console.log(query)
+      [targetId]:value
+    });
+    
+    console.log(query);
   };
+  // 변경할 것만 넣어서 보내려고 하려는 의도가 있음.
   
   const infoUpdateHandler = () => {
-    console.log(nickName)
-    console.log(query)
+    // console.log(nickName)
+    // console.log(query)
+
     sendPutRequest({
       endpoint: '/members/change',
       bodyData: {
@@ -55,7 +62,6 @@ const MemberList = ({ memberInfo }) => {
       nickName: memberInfo.nickName,
       email: memberInfo.email,
     })
-    console.log(memberInfo.name)
   };
 
   return (
@@ -66,7 +72,7 @@ const MemberList = ({ memberInfo }) => {
       <Box display="flex" justifyContent="center" alignItems="center">
         <TextField
           id="nickName"
-          label="nickName"
+          placeholder="nickName"
           name="nickName"
           type="text"
           margin="normal"
@@ -96,7 +102,7 @@ const MemberList = ({ memberInfo }) => {
       <Box display="flex" justifyContent="center" alignItems="center">
         <TextField
           id="email"
-          label="email"
+          placeholder="email"
           type="email"
           margin="normal"
           name="email"
@@ -107,7 +113,6 @@ const MemberList = ({ memberInfo }) => {
         />
       </Box>
       <div>
-
         <Button type="submit" variant="contained" label={'margin="normal"'} onClick={infoUpdateHandler} sx={{ marginTop: '20px' }}>
           저장
         </Button>

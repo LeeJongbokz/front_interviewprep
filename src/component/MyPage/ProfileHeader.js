@@ -4,8 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { Link } from 'react-router-dom';
 
-const ProfileHeader = () => {
-  const [value, setValue] = useState(0);
+const ProfileHeader = ({initValue = 0}) => {
+  const [value, setValue] = useState(initValue);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -16,9 +16,7 @@ const ProfileHeader = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        '& > *': {
-          m: 1,
-        },
+        margin: 1,
         borderBottom: 'solid 1px #f4f4f4',
         marginBottom: '50px;'
       }}

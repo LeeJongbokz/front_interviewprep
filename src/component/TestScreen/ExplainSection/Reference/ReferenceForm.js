@@ -21,7 +21,7 @@ const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
   };
 
   const submitHandler = async () => {
-    if( typeof authCtx.token === "undefined" || typeof authCtx.refreshToken === "undefined"){
+    if( authCtx.token === null || authCtx.refreshToken === null){
       authCtx.toggleLoginModal();
       return;
     }

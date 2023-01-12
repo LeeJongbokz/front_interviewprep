@@ -3,8 +3,8 @@ import { useCookies } from 'react-cookie';
 import { BACKEND_BASE_URL } from '../global_variables';
 
 const AuthContext = React.createContext({
-  token: '',
-  refreshToken : '',
+  token: null,
+  refreshToken : null,
   isLoggedIn: false,
   loginModalOpened: false,
   login: () => {},
@@ -15,8 +15,8 @@ const AuthContext = React.createContext({
 export const AuthContextProvider = props => {
   const [cookies, setCookie, removeCookie] = useCookies(['interviewPrep']);
 
-  let initialToken = cookies.usertoken;
-  let initialReftoken = cookies.refreshtoken;
+  let initialToken = cookies.usertoken || null;
+  let initialReftoken = cookies.refreshtoken || null;
 
   const [token, setToken] = useState(initialToken);
   const [refreshToken, setRefreshToken] = useState(initialReftoken);

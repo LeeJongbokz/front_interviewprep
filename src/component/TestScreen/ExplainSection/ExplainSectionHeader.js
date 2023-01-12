@@ -27,13 +27,13 @@ const QuestionSectionHeader = ({ questionId, headerVal, setHeaderVal }) => {
         <Tabs />
       ) : (
         <Tabs variant="fullWidth" centered value={headerVal} onChange={changeHanlder}>
-          <Tab disableRipple={true} label="question" />
-          <Tab disableRipple={true} label="reference" />
+          <Tab disableRipple={true} label="문제" />
+          <Tab disableRipple={true} label="참고 자료" />
           {solved ? (
-            <Tab disableRipple={true} label="solution" />
+            <Tab disableRipple={true} label="다른답변" />
           ) : (
             <Tab
-              label="solution"
+              label="다른 답변"
               wrapped={true}
               sx={{ minHeight: 48 }}
               icon={<LockSharpIcon margin={0} sx={{ fontSize: 15 }} />}
@@ -41,7 +41,7 @@ const QuestionSectionHeader = ({ questionId, headerVal, setHeaderVal }) => {
               disabled
             />
           )}
-          <Tab disableRipple={true} label="submission" />
+          <Tab disableRipple={true} label="나의 답변" />
         </Tabs>
       )}
     </>

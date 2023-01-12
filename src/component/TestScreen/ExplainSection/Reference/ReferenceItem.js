@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ExplainSectionCardMoreButton from '../../../UI/ExplainSectionCardMoreButton';
+import ExplainSectionCardMoreButton from './ExplainSectionCardMoreButton';
 import Linkify from 'react-linkify';
 
 const ReferenceItem = ({ refId, namae, content, date, heartCnt: initHeartCnt, myown = false, setReference }) => {

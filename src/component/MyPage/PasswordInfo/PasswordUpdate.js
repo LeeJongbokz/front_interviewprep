@@ -8,7 +8,7 @@ import useHttpRequest from '../../../hook/use-http';
 
 const PasswordUpdate = ({ memberInfo }) => {
 
-  console.log(memberInfo);
+  // console.log(memberInfo);
   const [inputs, setInputs] = useState({
     password: memberInfo.password,
     newPassword: memberInfo.password,
@@ -32,13 +32,13 @@ const PasswordUpdate = ({ memberInfo }) => {
       [e.target.id]:value
     })
     // console.log(e.target)
-    console.log(value)
-    console.log(inputs)
-    console.log(query)
+    // console.log(value)
+    // console.log(inputs)
+    // console.log(query)
   };
   const passwordUpdateHandler = () => {
-    console.log(newPassword)
-    console.log(password)
+    // console.log(newPassword)
+    // console.log(password)
     
     sendPutRequest({
       endpoint: '/members/password/change',

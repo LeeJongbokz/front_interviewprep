@@ -15,7 +15,6 @@ const Profile = () => {
   const [memberInfo, setMemberInfo] = useState([]);
   const { isLoading, sendGetRequest } = useHttpRequest();
 
-
   useEffect(() => {
     const memberInfoHandler = data => {
       setMemberInfo(data.data);
@@ -26,7 +25,7 @@ const Profile = () => {
 
   return (
     <ContainerUI>
-      <ProfileHeader></ProfileHeader>
+      <ProfileHeader initValue={0} />
       <Typography component="h1" variant="h5" fontWeight="bold" sx={{ marginBottom: '20px' }}>
         회원 정보
       </Typography>
