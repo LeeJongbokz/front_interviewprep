@@ -59,7 +59,7 @@ const LoginForModal = ({ isOpen = false, callback = () => {} }) => {
       >
         <Grid padding={4} component={Paper} square={true}>
           <Typography align="center" component="h1" variant="h5">
-            Login
+            로그인
           </Typography>
           <form onSubmit={onSubmitHandler} ref={formRef} noValidate>
             <TextField

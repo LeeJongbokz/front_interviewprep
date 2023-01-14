@@ -27,6 +27,8 @@ const Login = () => {
     authCtx
       .login(emailRef.current.value, passwordRef.current.value)
       .then(data => {
+        console.log(data);
+
         if (data.error) {
           throw new Error();
         } else if (data.success === false) {
@@ -44,7 +46,7 @@ const Login = () => {
   };
 
   return (
-    <PaperUI title="Login">
+    <PaperUI title="InterviewPrep">
       <form onSubmit={onSubmitHandler} ref={formRef} noValidate>
         <TextField
           id="email"
@@ -58,7 +60,7 @@ const Login = () => {
         />
         <TextField
           id="password"
-          label="passwords"
+          label="password"
           type="password"
           margin="normal"
           inputRef={passwordRef}
