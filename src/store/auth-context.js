@@ -64,6 +64,26 @@ export const AuthContextProvider = props => {
     }
   };
 
+  const oAuthLoginhandler = (tokenData) => {
+    if(tokenData.success){
+      const accessToken = tokenData.data.accessToken;
+      const refreshToken = tokenData.data.refreshToken;
+
+      const expires = new Date();
+      expires.setUTCDate(expires.setUTCDate() + 14);
+      
+      setCookie('usertoken', accessToken, {
+        path: '/',
+        expires: expires,
+      });
+      setToken(accessToken);
+      setRefreshToken(refreshToken);
+      return { error: false, success: true };
+    } else {
+      return { error: false, success: false };
+    }
+  }
+
   const logoutHandler = () => {
     removeCookie('usertoken',{path:'/'});
     removeCookie('refreshtoken',{path:'/'});
@@ -83,6 +103,7 @@ export const AuthContextProvider = props => {
     isLoggedIn: userIsLoggedIn,
     loginModalOpened: loginModalOpened,
     login: loginHandler,
+    oAuthLogin : oAuthLoginhandler,
     logout: logoutHandler,
     toggleLoginModal: toggleLoginModalHandler,
   };
