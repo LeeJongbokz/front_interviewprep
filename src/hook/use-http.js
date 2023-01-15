@@ -14,9 +14,7 @@ const useHttpRequest = (isLoadingInit = false) => {
         if (authCtx.token && authCtx.refreshToken) {
           response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
             headers: {
-              Authorization: authCtx.token,
-              accessToken: authCtx.token,
-              refreshToken: authCtx.refreshToken,
+              Authorization: "Bearer "+authCtx.token
             },
           });
         } else {
@@ -47,9 +45,7 @@ const useHttpRequest = (isLoadingInit = false) => {
           body: JSON.stringify(bodyData),
           headers: {
             'Content-Type': 'application/json',
-            Authorization: authCtx.token,
-            accessToken: authCtx.token,
-            refreshToken: authCtx.refreshToken,
+            Authorization: "Bearer "+authCtx.token
           },
         });
 
@@ -77,9 +73,7 @@ const useHttpRequest = (isLoadingInit = false) => {
           body: JSON.stringify(bodyData),
           headers: {
             'Content-Type': 'application/json',
-            Authorization: authCtx.token,
-            accessToken: authCtx.token,
-            refreshToken: authCtx.refreshToken,
+            Authorization: "Bearer "+authCtx.token
           },
         });
 
@@ -107,9 +101,7 @@ const useHttpRequest = (isLoadingInit = false) => {
           body: JSON.stringify(bodyData),
           headers: {
             'Content-Type': 'application/json',
-            Authorization: authCtx.token,
-            accessToken: authCtx.token,
-            refreshToken: authCtx.refreshToken,
+            Authorization: "Bearer "+authCtx.token
           },
         });
 
