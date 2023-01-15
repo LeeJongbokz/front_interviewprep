@@ -14,6 +14,9 @@ import FormLabel from '@mui/material/FormLabel';
 import SubmitButtonGroup from './SubmitButtonGroup';
 
 const AnswerForm = ({ questionId }) => {
+
+  const maxLength = 500;
+
   const [answer, setAnswer] = useState('');
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
@@ -27,7 +30,7 @@ const AnswerForm = ({ questionId }) => {
     if (window.confirm('답안을 제출하시겠습니까?')) {
       const bodyData = {
         questionId,
-        content: answer.slice(0, 200),
+        content: answer.slice(0, maxLength),
       };
       const response = await fetch(`${BACKEND_BASE_URL}/answer/`, {
         method: 'POST',
@@ -59,13 +62,13 @@ const AnswerForm = ({ questionId }) => {
         <TextField
           id="answer"
           multiline
-          rows={3}
+          rows={6}
           onChange={changeHandler}
           placeholder="답을 입력해주세요"
           inputProps={{
-            maxLength: 200,
+            maxLength,
           }}
-          helperText={`${answer.length}/200`}
+          helperText={`${answer.length}/${maxLength}`}
         />
       </FormControl>
       <SubmitButtonGroup questionId={questionId} submitHandler={submitHandler} />
