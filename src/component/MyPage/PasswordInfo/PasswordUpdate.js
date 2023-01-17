@@ -31,7 +31,7 @@ const PasswordUpdate = ({ memberInfo }) => {
       ...query,
       [e.target.id]:value
     })
-    // console.log(e.target)
+    console.log(e.target)
     console.log(value)
     console.log(inputs)
     console.log(query)
