@@ -12,7 +12,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExplainSectionCardMoreButton from './ExplainSectionCardMoreButton';
 import Linkify from 'react-linkify';
 
-const ReferenceItem = ({ refId, namae, content, date, heartCnt: initHeartCnt, myown = false, setReference }) => {
+const ReferenceItem = ({ refId, namae, content, date = "0000-00-00", heartCnt: initHeartCnt, myown = false, setReference }) => {
   const [favorite, setFavorite] = useState(false);
   const [heartCnt, setHeartCnt] = useState(initHeartCnt);
 

@@ -28,13 +28,14 @@ const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
 
     if (window.confirm('레퍼런스를 등록 하시겠습니까?')) {
       const postResponseHandler = data => {
+        const {id, name, createDate } = data.data;
         setReferenceList(prevState => {
           const newState = [
             {
-              id: data.data.id,
+              id,
               link: reference.slice(0, 1000),
-              name: data.data.name,
-              date: data.data.createdDate.slice(0,10),
+              name,
+              date: createDate.slice(0,10),
               heartCnt: 0,
               myRef: true,
             },
