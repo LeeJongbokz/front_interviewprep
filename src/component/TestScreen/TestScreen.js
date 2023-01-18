@@ -6,20 +6,25 @@ import Grid from '@mui/material/Grid';
 import AnswerField from './AnswerSection/AnswerForm';
 
 import ExplainSection from './ExplainSection/ExplainSection';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
+const queryClient = new QueryClient();
 const TestScreen = () => {
   const { questionId } = useParams();
+  queryClient.removeQueries();
   return (
-    <Container maxWidth={false} sx={{ backgroundColor: 'white', paddingTop: '50px' }}>
-      <Grid container borderTop={1} borderColor={'lightGray'} minHeight="88vh">
-        <Grid item xs={12} md={6} sx={{ borderRight: { md: 'solid 1px lightGray' } }}>
-          <ExplainSection questionId={questionId} />
+    <QueryClientProvider client={queryClient}>
+      <Container maxWidth={false} sx={{ backgroundColor: 'white', paddingTop: '50px' }}>
+        <Grid container borderTop={1} borderColor={'lightGray'} minHeight="88vh">
+          <Grid item xs={12} md={6} sx={{ borderRight: { md: 'solid 1px lightGray' } }}>
+            <ExplainSection questionId={questionId} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <AnswerField questionId={questionId} />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <AnswerField questionId={questionId} />
-        </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </QueryClientProvider>
   );
 };
 

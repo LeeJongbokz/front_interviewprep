@@ -1,8 +1,9 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BACKEND_BASE_URL } from '../../../global_variables';
+// import { BACKEND_BASE_URL } from '../../../global_variables';
 
 import AuthContext from '../../../store/auth-context';
+import useHttpRequest from '../../../hook/use-http';
 
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
@@ -14,10 +15,10 @@ import FormLabel from '@mui/material/FormLabel';
 import SubmitButtonGroup from './SubmitButtonGroup';
 
 const AnswerForm = ({ questionId }) => {
-
   const maxLength = 500;
 
   const [answer, setAnswer] = useState('');
+  const { sendPostRequest } = useHttpRequest();
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -32,20 +33,12 @@ const AnswerForm = ({ questionId }) => {
         questionId,
         content: answer.slice(0, maxLength),
       };
-      const response = await fetch(`${BACKEND_BASE_URL}/answer/`, {
-        method: 'POST',
-        body: JSON.stringify(bodyData),
-        headers: {
-          'Content-Type': 'application/json',
-          accessToken: authCtx.token,
-          refreshToken: authCtx.refreshToken,
-        },
+      await sendPostRequest({
+        endpoint: `/answer/`,
+        bodyData
+      }, () => {
+        navigate('/test');
       });
-      if (!response.ok) {
-        alert('오류가 발생했습니다. 다시 시도해주세요!');
-        return;
-      }
-      navigate('/test');
       return;
     }
   };
