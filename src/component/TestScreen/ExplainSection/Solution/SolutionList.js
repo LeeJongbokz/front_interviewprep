@@ -14,9 +14,10 @@ const SolutionList = ({ questionId }) => {
 
   useEffect(() => {
     const answerArrayHandler = data => {
-      setAnswerArray(data.data.content);
+      const content = data?.data?.content || []
+      setAnswerArray(content);
       lastQuestionId = questionId;
-      savedSolution = data?.data?.content || []
+      savedSolution = content;
     };
     if(lastQuestionId === questionId && savedSolution.length > 0 ){
       setAnswerArray(savedSolution);
@@ -28,7 +29,7 @@ const SolutionList = ({ questionId }) => {
   return (
     <>
       {isLoading && <LoadingSpinner />}
-      {!isLoading && answerArray.length < 1 && '등록된 솔루션이 없습니다.'}
+      {!isLoading && answerArray?.length < 1 && '등록된 솔루션이 없습니다.'}
       {answerArray.map(item => (
           <SolutionItem
             key={item.answerId}

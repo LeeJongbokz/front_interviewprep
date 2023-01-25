@@ -6,11 +6,24 @@ import MenuItem from '@mui/material/MenuItem';
 
 import useHttpRequest from '../../../../hook/use-http';
 
-const ExplainSectionCardMoreButton = ({refId, setReference}) => {
+import { queryClient, useMutation } from "../fetchForQuery";
+
+const ExplainSectionCardMoreButton = ({refId, queryKey}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const { sendDelRequest } = useHttpRequest();
+
+  const delReferenceMutation = useMutation({
+    mutationFn: async() => {
+      await sendDelRequest({
+        endpoint: `/question/ref/${refId}`
+      })
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({queryKey : [queryKey], exact: true});
+    }
+  })
 
   const menuClickHandler = event => {
     setAnchorEl(event.currentTarget);
@@ -22,10 +35,7 @@ const ExplainSectionCardMoreButton = ({refId, setReference}) => {
 
   const deleteHandler = () => {
     if(window.confirm("등록하신 레퍼런스를 삭제하시겠습니까?")){
-      sendDelRequest({
-        endpoint: `/question/ref/${refId}`,
-      });
-      setReference(prevState => prevState.filter(item => item.id !== refId));
+      delReferenceMutation.mutate();
     }
   } 
 

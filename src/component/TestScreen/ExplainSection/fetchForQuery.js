@@ -2,9 +2,13 @@ import { useContext } from "react";
 import { BACKEND_BASE_URL } from "../../../global_variables"
 import AuthContext from "../../../store/auth-context";
 
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
+import { QueryClient } from 'react-query';
 
-export function useFetchForQuery(url, queryKey, staleTime){
+
+const queryClient = new QueryClient();
+
+function useFetchForQuery(url, queryKey, staleTime){
   const authCtx = useContext(AuthContext);
   
   const { data, isLoading } = useQuery(
@@ -24,3 +28,5 @@ export function useFetchForQuery(url, queryKey, staleTime){
   
   return { data, isLoading };
 }
+
+export { queryClient, useFetchForQuery, useMutation };
