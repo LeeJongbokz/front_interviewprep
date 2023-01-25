@@ -37,7 +37,7 @@ const AnswerForm = ({ questionId }) => {
         endpoint: `/answer/`,
         bodyData
       }, () => {
-        navigate('/test');
+        navigate(0);
       });
       return;
     }

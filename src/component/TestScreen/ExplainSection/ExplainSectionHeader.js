@@ -23,9 +23,7 @@ const QuestionSectionHeader = ({ questionId, headerVal, setHeaderVal }) => {
 
   return (
     <>
-      {isLoading ? (
-        <Tabs />
-      ) : (
+      {!isLoading && (
         <Tabs variant="fullWidth" centered value={headerVal} onChange={changeHanlder}>
           <Tab disableRipple={true} label="문제" />
           <Tab disableRipple={true} label="참고 자료" />
