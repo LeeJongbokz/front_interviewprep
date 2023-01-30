@@ -11,7 +11,9 @@ import Stack from '@mui/material/Stack';
 import Divider from '@mui/material/Divider';
 import useHttpRequest from '../../../../hook/use-http';
 
-const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
+import { queryClient, useMutation } from '../fetchForQuery';
+
+const ReferenceForm = ({ questionId, queryKey }) => {
   const [reference, setReference] = useState('');
   const { sendPostRequest } = useHttpRequest();
   const authCtx = useContext(AuthContext);
@@ -20,31 +22,8 @@ const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
     setReference(e.target.value);
   };
 
-  const submitHandler = async () => {
-    if( authCtx.token === null || authCtx.refreshToken === null){
-      authCtx.toggleLoginModal();
-      return;
-    }
-
-    if (window.confirm('레퍼런스를 등록 하시겠습니까?')) {
-      const postResponseHandler = data => {
-        setReferenceList(prevState => {
-          const newState = [
-            {
-              id: data.data.id,
-              link: reference.slice(0, 1000),
-              name: data.data.name,
-              date: data.data.createdDate.slice(0,10),
-              heartCnt: 0,
-              myRef: true,
-            },
-            ...prevState,
-          ];
-          saveReference(newState);
-          return newState;
-        });
-      };
-
+  const saveReferenceMutation = useMutation({
+    mutationFn: async () => {
       await sendPostRequest(
         {
           endpoint: `/question/ref/`,
@@ -52,13 +31,26 @@ const ReferenceForm = ({ questionId, setReferenceList, saveReference }) => {
             questionId: questionId,
             link: reference.slice(0, 1000),
           },
-        },
-        postResponseHandler
+        }
       );
+    },
+    onSuccess: () => {
+      queryClient.refetchQueries({queryKey : [queryKey], exact: true});
+    },
+  });
 
+  const submitHandler = async () => {
+    if (authCtx.token === null) {
+      authCtx.toggleLoginModal();
+      return;
+    }
+
+    if (window.confirm('레퍼런스를 등록 하시겠습니까?')) {
+      saveReferenceMutation.mutate();
       setReference('');
     }
   };
+
   return (
     <Box>
       <FormControl margin="dense" fullWidth variant="standard" sx={{ marginTop: '20px' }}>

@@ -16,6 +16,7 @@ import RecentProblemPage from './pages/RecentProblemPage';
 import RecentExamPage from './pages/RecentExamPage';
 import TestScreenPage from './pages/TestScreenPage';
 import Modal from './component/UI/Modal';
+import AuthCallback from "./utils/AuthCallback";
 
 import AuthContext from './store/auth-context';
 import { THEME_COLOR } from './global_variables';
@@ -61,6 +62,7 @@ function App() {
             <Route path="/passwordUpdate" element={<PasswordUpdatePage />} />
             <Route path="/RecentProblem" element={<RecentProblemPage />} />
             <Route path="/RecentExam" element={<RecentExamPage />} />
+            <Route path="/members/auth/:platform/callback" element={<AuthCallback />} />
           </Route>
         </Switch>
       </div>

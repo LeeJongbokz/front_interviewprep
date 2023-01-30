@@ -1,47 +1,22 @@
-import { useState, useEffect } from 'react';
-
 import ReferenceItem from './ReferenceItem';
 import ReferenceForm from './ReferenceForm';
 
-import useHttpRequest from '../../../../hook/use-http';
 import LoadingSpinner from '../../../UI/LoadingSpinner';
-
-let lastQuestionId;
-
-let savedReference = [];
+import { useFetchForQuery } from '../fetchForQuery';
 
 const ReferenceList = ({ questionId }) => {
-  if( questionId !== lastQuestionId){
-    savedReference = [];
-  }
-  const [reference, setReference] = useState(savedReference);
-  const { isLoading, sendGetRequest } = useHttpRequest();
-
-  const saveReference = (newReference) => savedReference = newReference;
-
-  useEffect(() => {
-    const referenceListHandler = data => {
-      if (data.success) {
-        setReference(data.data.content);
-      } 
-      savedReference = data?.data?.content || [];
-      lastQuestionId = questionId;
-    };
-    if( lastQuestionId === questionId && savedReference.length > 0 ){
-      // setReference(savedReference);
-    } else if (savedReference.length === 0 || lastQuestionId !== questionId) {
-      sendGetRequest(`/question/ref/${questionId}`, referenceListHandler);
-    }
-  }, [questionId, sendGetRequest, reference.length]);
+  const url = `/question/ref/${questionId}`;
+  const queryKey = `reference_${questionId}`
+  const { data: reference, isLoading } = useFetchForQuery(url, queryKey, 10000);
   
   return (
     <>
-      <ReferenceForm questionId={questionId} saveReference={saveReference} setReferenceList={setReference} />
+      <ReferenceForm questionId={questionId} queryKey={queryKey} />
       {isLoading && <LoadingSpinner />}
-      {!isLoading && (
+      {!isLoading && reference.success && 
         <>
-          {reference.length === 0 && '등록된 레퍼런스가 없습니다.'}
-          {reference.map(item => (
+          {reference.data.content.length === 0 && '등록된 레퍼런스가 없습니다.'}
+          {reference.data.content.map(item => (
             <ReferenceItem
               key={item.id}
               refId={item.id}
@@ -50,11 +25,11 @@ const ReferenceList = ({ questionId }) => {
               date={item.createdDate}
               heartCnt={item.heartCnt}
               myown={item.myRef}
-              setReference={setReference}
+              queryKey={queryKey}
             />
           ))}
         </>
-      )}
+      }
     </>
   );
 };

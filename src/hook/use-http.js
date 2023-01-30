@@ -8,15 +8,21 @@ const useHttpRequest = (isLoadingInit = false) => {
 
   const sendGetRequest = useCallback(
     async (endpoint, callback) => {
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const timeout = setTimeout(() => {
+        signal.aborted();
+      }, 1000);
+
       setIsLoading(true);
       try {
         let response;
-        if (authCtx.token && authCtx.refreshToken) {
+        if (authCtx.token) {
           response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
             headers: {
-              accessToken: authCtx.token,
-              refreshToken: authCtx.refreshToken,
+              Authorization: 'Bearer ' + authCtx.token,
             },
+            signal,
           });
         } else {
           response = await fetch(`${BACKEND_BASE_URL}${endpoint}`);
@@ -31,14 +37,20 @@ const useHttpRequest = (isLoadingInit = false) => {
       } catch (err) {
         console.error(err);
       }
+      clearTimeout(timeout);
       setIsLoading(false);
     },
-    [authCtx.token, authCtx.refreshToken]
+    [authCtx.token]
   );
 
   const sendPostRequest = useCallback(
     async (requestOption, callback = () => {}) => {
-      // setIsLoading(true);
+      // const controller = new AbortController();
+      // const signal = controller.signal;
+      // const timeout = setTimeout(() => {
+      //   signal.aborted();
+      // }, 2000);
+
       const { endpoint, bodyData } = requestOption;
       try {
         const response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
@@ -46,9 +58,9 @@ const useHttpRequest = (isLoadingInit = false) => {
           body: JSON.stringify(bodyData),
           headers: {
             'Content-Type': 'application/json',
-            accessToken: authCtx.token,
-            refreshToken: authCtx.refreshToken,
+            Authorization: 'Bearer ' + authCtx.token,
           },
+          // signal,
         });
 
         if (!response.ok) {
@@ -60,24 +72,28 @@ const useHttpRequest = (isLoadingInit = false) => {
       } catch (err) {
         console.error(err);
       }
-      // setIsLoading(false);
+      // clearTimeout(timeout);
     },
-    [authCtx.token, authCtx.refreshToken]
+    [authCtx.token]
   );
 
   const sendPutRequest = useCallback(
     async (requestOption, callback = () => {}) => {
-      // setIsLoading(true);
       const { endpoint, bodyData } = requestOption;
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const timeout = setTimeout(() => {
+        signal.aborted();
+      }, 2000);
       try {
         const response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
           method: 'PUT',
           body: JSON.stringify(bodyData),
           headers: {
             'Content-Type': 'application/json',
-            accessToken: authCtx.token,
-            refreshToken: authCtx.refreshToken,
+            Authorization: 'Bearer ' + authCtx.token,
           },
+          signal,
         });
 
         if (!response.ok) {
@@ -89,14 +105,18 @@ const useHttpRequest = (isLoadingInit = false) => {
       } catch (err) {
         console.error(err);
       }
-      // setIsLoading(false);
+      clearTimeout(timeout);
     },
-    [authCtx.token, authCtx.refreshToken]
+    [authCtx.token]
   );
 
   const sendDelRequest = useCallback(
     async (requestOption, callback = () => {}) => {
-      // setIsLoading(true);
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const timeout = setTimeout(() => {
+        signal.aborted();
+      }, 2000);
       const { endpoint, bodyData } = requestOption;
       try {
         const response = await fetch(`${BACKEND_BASE_URL}${endpoint}`, {
@@ -104,23 +124,22 @@ const useHttpRequest = (isLoadingInit = false) => {
           body: JSON.stringify(bodyData),
           headers: {
             'Content-Type': 'application/json',
-            accessToken: authCtx.token,
-            refreshToken: authCtx.refreshToken,
+            Authorization: 'Bearer ' + authCtx.token,
           },
+          signal,
         });
 
         if (!response.ok) {
           throw Error('Some thing went Error');
         }
-
         const responseData = await response.json();
         callback(responseData);
       } catch (err) {
         console.error(err);
       }
-      // setIsLoading(false);
+      clearTimeout(timeout);
     },
-    [authCtx.token, authCtx.refreshToken]
+    [authCtx.token]
   );
 
   return { isLoading, sendGetRequest, sendPostRequest, sendPutRequest, sendDelRequest };
