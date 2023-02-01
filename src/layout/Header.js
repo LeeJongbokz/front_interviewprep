@@ -77,7 +77,7 @@ const Header = () => {
           <Button
             component={Link}
             onClick={handleClose}
-            to="/my-page"
+            to="/RecentProblem"
             sx={{ color: '#3A3A3A', fontWeight: 'bold', fontSize: '14px' }}
           >
             마이페이지
