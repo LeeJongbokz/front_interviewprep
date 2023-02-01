@@ -43,7 +43,7 @@ const RecentProblemTable = ({ memberInfo }) => {
         return (
           <TableRow hover className={classes.row} onClick={() => navigate(`/test/${item["@id"]}`)}>
             <TableCell component="th" scope="row">{item.id}</TableCell>
-            <TableCell>{item.questionTitle}</TableCell>
+            <TableCell>{item.question_title}</TableCell>
             <TableCell>{timeForToday(item.createdDate)}</TableCell>
           </TableRow>
         )
