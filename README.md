@@ -15,10 +15,10 @@
 
 1) Repository에서 프로젝트를 다운 받습니다. 
 
-$ git clone https://github.com/LeeJongbokz/front_interviewprep.git 
+- git clone https://github.com/LeeJongbokz/front_interviewprep.git 
 
 2) node_modules를 설치합니다. 
-$ npm install
+- npm install
 
 3) 프로젝트를 실행합니다. 
-$ npm start
+- npm start
